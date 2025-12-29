@@ -1,25 +1,21 @@
-import type { FeatureType } from '@affine/graphql';
-import type {
-  ColumnDef,
-  PaginationState,
-  RowSelectionState,
-} from '@tanstack/react-table';
-import { type Dispatch, type SetStateAction, useEffect, useState } from 'react';
+import type { AdminWorkspaceSort, FeatureType } from '@affine/graphql';
+import type { ColumnDef, PaginationState } from '@tanstack/react-table';
+import type { Dispatch, SetStateAction } from 'react';
 
 import { SharedDataTable } from '../../../components/shared/data-table';
-import type { UserType } from '../schema';
 import { DataTableToolbar } from './data-table-toolbar';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   pagination: PaginationState;
-  usersCount: number;
-  selectedUsers: UserType[];
+  workspacesCount: number;
   keyword: string;
-  onKeywordChange: Dispatch<SetStateAction<string>>;
+  onKeywordChange: (value: string) => void;
   selectedFeatures: FeatureType[];
-  onFeaturesChange: Dispatch<SetStateAction<FeatureType[]>>;
+  onFeaturesChange: (features: FeatureType[]) => void;
+  sort: AdminWorkspaceSort | undefined;
+  onSortChange: (sort: AdminWorkspaceSort | undefined) => void;
   onPaginationChange: Dispatch<
     SetStateAction<{
       pageIndex: number;
@@ -32,46 +28,32 @@ export function DataTable<TData extends { id: string }, TValue>({
   columns,
   data,
   pagination,
-  usersCount,
-  selectedUsers,
+  workspacesCount,
   keyword,
   onKeywordChange,
   selectedFeatures,
   onFeaturesChange,
+  sort,
+  onSortChange,
   onPaginationChange,
 }: DataTableProps<TData, TValue>) {
-  const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
-
-  useEffect(() => {
-    setRowSelection({});
-  }, [keyword, selectedFeatures]);
-
-  useEffect(() => {
-    const selection: Record<string, boolean> = {};
-    selectedUsers.forEach(user => {
-      selection[user.id] = true;
-    });
-    setRowSelection(selection);
-  }, [selectedUsers]);
-
   return (
     <SharedDataTable
       columns={columns}
       data={data}
-      totalCount={usersCount}
+      totalCount={workspacesCount}
       pagination={pagination}
       onPaginationChange={onPaginationChange}
-      rowSelection={rowSelection}
-      onRowSelectionChange={setRowSelection}
-      resetFiltersDeps={[keyword, selectedFeatures]}
+      resetFiltersDeps={[keyword, selectedFeatures, sort]}
       renderToolbar={table => (
         <DataTableToolbar
           table={table}
-          selectedUsers={selectedUsers}
           keyword={keyword}
           onKeywordChange={onKeywordChange}
           selectedFeatures={selectedFeatures}
           onFeaturesChange={onFeaturesChange}
+          sort={sort}
+          onSortChange={onSortChange}
         />
       )}
     />
