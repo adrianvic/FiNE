@@ -1,11 +1,11 @@
-mutation submitAudioTranscription(
+mutation submitTranscriptTask(
   $workspaceId: String!
   $blobId: String!
   $blob: Upload
   $blobs: [Upload!]
   $input: SubmitAudioTranscriptionInput
 ) {
-  submitAudioTranscription(
+  submitTranscriptTask(
     blob: $blob
     blobs: $blobs
     blobId: $blobId

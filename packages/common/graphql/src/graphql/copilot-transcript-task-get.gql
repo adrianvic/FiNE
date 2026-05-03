@@ -1,11 +1,7 @@
-query getAudioTranscription(
-  $workspaceId: String!
-  $jobId: String
-  $blobId: String
-) {
+query getTranscriptTask($workspaceId: String!, $taskId: String, $blobId: String) {
   currentUser {
     copilot(workspaceId: $workspaceId) {
-      audioTranscription(jobId: $jobId, blobId: $blobId) {
+      transcriptTask(taskId: $taskId, blobId: $blobId) {
         id
         status
         title
