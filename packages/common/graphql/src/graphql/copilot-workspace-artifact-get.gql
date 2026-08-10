@@ -1,10 +1,10 @@
-query getWorkspaceEmbeddingFiles(
+query getWorkspaceArtifacts(
   $workspaceId: String!
   $pagination: PaginationInput!
 ) {
   workspace(id: $workspaceId) {
     embedding {
-      files(pagination: $pagination) {
+      artifacts(pagination: $pagination) {
         totalCount
         pageInfo {
           endCursor
@@ -12,10 +12,11 @@ query getWorkspaceEmbeddingFiles(
         }
         edges {
           node {
-            fileId
+            artifactId
+            contentHash
             fileName
-            blobId
-            mimeType
+            embeddingStatus
+            mediaType
             size
             createdAt
           }
