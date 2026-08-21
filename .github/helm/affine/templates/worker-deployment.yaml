@@ -1,31 +1,33 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "front.fullname" . }}
+  name: affine-worker
   labels:
-    {{- include "front.labels" . | nindent 4 }}
+    app.kubernetes.io/name: affine-worker
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    monitoring: enabled
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.worker.replicaCount }}
   selector:
     matchLabels:
-      {{- include "front.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/name: affine-worker
+      app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       annotations:
         checksum/indexer-config: {{ include "affine.indexerConfig" . | sha256sum }}
-      {{- with .Values.podAnnotations }}
+      {{- with .Values.worker.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "front.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/name: affine-worker
+        app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
-      {{- with .Values.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      serviceAccountName: {{ include "front.serviceAccountName" . }}
+      serviceAccountName: {{ .Values.worker.serviceAccount.name }}
       securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+        {{- toYaml .Values.worker.podSecurityContext | nindent 8 }}
       {{- with .Values.global.database.gcloud }}
       {{- if .enabled }}
       initContainers:
@@ -43,9 +45,11 @@ spec:
       {{- end }}
       {{- end }}
       containers:
-        - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+        - name: worker
+          image: "{{ .Values.worker.image.repository }}:{{ .Values.worker.image.tag | default .Values.graphql.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            {{- toYaml .Values.worker.securityContext | nindent 12 }}
           env:
             - name: AFFINE_PRIVATE_KEY
               valueFrom:
@@ -53,9 +57,9 @@ spec:
                   name: "{{ .Values.global.secret.secretName }}"
                   key: key
             - name: NODE_ENV
-              value: "{{ .Values.env }}"
+              value: "{{ .Values.worker.env }}"
             - name: NODE_OPTIONS
-              value: "{{ .Values.nodeOptions }}"
+              value: "{{ .Values.worker.nodeOptions }}"
             - name: NO_COLOR
               value: "1"
             - name: DEPLOYMENT_TYPE
@@ -63,7 +67,7 @@ spec:
             - name: DEPLOYMENT_PLATFORM
               value: "{{ .Values.global.deployment.platform }}"
             - name: SERVER_FLAVOR
-              value: "front"
+              value: "worker"
             - name: AFFINE_ENV
               value: "{{ .Release.Namespace }}"
             - name: DATABASE_PASSWORD
@@ -89,55 +93,57 @@ spec:
             - name: REDIS_SERVER_DATABASE
               value: "{{ .Values.global.redis.database }}"
             - name: AFFINE_SERVER_PORT
-              value: "{{ .Values.app.port }}"
-            - name: AFFINE_SERVER_SUB_PATH
-              value: "{{ .Values.app.path }}"
+              value: "{{ .Values.worker.app.port }}"
             - name: AFFINE_SERVER_HOST
-              value: "{{ .Values.app.host }}"
+              value: "{{ .Values.worker.app.host }}"
             - name: AFFINE_SERVER_HTTPS
-              value: "{{ .Values.app.https }}"
+              value: "{{ .Values.worker.app.https }}"
           ports:
             - name: http
-              containerPort: {{ .Values.app.port }}
+              containerPort: {{ .Values.worker.app.port }}
               protocol: TCP
           livenessProbe:
             httpGet:
               path: /info
               port: http
-            initialDelaySeconds: {{ default .Values.probe.initialDelaySeconds .Values.probe.liveness.initialDelaySeconds }}
-            timeoutSeconds: {{ default .Values.probe.timeoutSeconds .Values.probe.liveness.timeoutSeconds }}
-            periodSeconds: {{ default .Values.probe.periodSeconds .Values.probe.liveness.periodSeconds }}
-            failureThreshold: {{ default .Values.probe.failureThreshold .Values.probe.liveness.failureThreshold }}
-            successThreshold: {{ default .Values.probe.successThreshold .Values.probe.liveness.successThreshold }}
+            initialDelaySeconds: {{ default .Values.worker.probe.initialDelaySeconds .Values.worker.probe.liveness.initialDelaySeconds }}
+            timeoutSeconds: {{ default .Values.worker.probe.timeoutSeconds .Values.worker.probe.liveness.timeoutSeconds }}
+            periodSeconds: {{ default .Values.worker.probe.periodSeconds .Values.worker.probe.liveness.periodSeconds }}
+            failureThreshold: {{ default .Values.worker.probe.failureThreshold .Values.worker.probe.liveness.failureThreshold }}
+            successThreshold: {{ default .Values.worker.probe.successThreshold .Values.worker.probe.liveness.successThreshold }}
           readinessProbe:
             httpGet:
               path: /info
               port: http
-            initialDelaySeconds: {{ default .Values.probe.initialDelaySeconds .Values.probe.readiness.initialDelaySeconds }}
-            timeoutSeconds: {{ default .Values.probe.timeoutSeconds .Values.probe.readiness.timeoutSeconds }}
-            periodSeconds: {{ default .Values.probe.periodSeconds .Values.probe.readiness.periodSeconds }}
-            failureThreshold: {{ default .Values.probe.failureThreshold .Values.probe.readiness.failureThreshold }}
-            successThreshold: {{ default .Values.probe.successThreshold .Values.probe.readiness.successThreshold }}
+            initialDelaySeconds: {{ default .Values.worker.probe.initialDelaySeconds .Values.worker.probe.readiness.initialDelaySeconds }}
+            timeoutSeconds: {{ default .Values.worker.probe.timeoutSeconds .Values.worker.probe.readiness.timeoutSeconds }}
+            periodSeconds: {{ default .Values.worker.probe.periodSeconds .Values.worker.probe.readiness.periodSeconds }}
+            failureThreshold: {{ default .Values.worker.probe.failureThreshold .Values.worker.probe.readiness.failureThreshold }}
+            successThreshold: {{ default .Values.worker.probe.successThreshold .Values.worker.probe.readiness.successThreshold }}
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+            {{- toYaml .Values.worker.resources | nindent 12 }}
           volumeMounts:
             - name: indexer-config
               mountPath: /app/config.json
               subPath: config.json
               readOnly: true
+            - name: tmp
+              mountPath: /tmp
       volumes:
         - name: indexer-config
           secret:
             secretName: indexer
-      {{- with .Values.nodeSelector }}
+        - name: tmp
+          emptyDir: {}
+      {{- with .Values.worker.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.affinity }}
+      {{- with .Values.worker.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.tolerations }}
+      {{- with .Values.worker.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
