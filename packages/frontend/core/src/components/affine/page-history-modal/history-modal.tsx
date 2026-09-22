@@ -9,7 +9,7 @@ import { WorkspacePermissionService } from '@affine/core/modules/permissions';
 import { WorkspaceQuotaService } from '@affine/core/modules/quota';
 import { WorkspaceService } from '@affine/core/modules/workspace';
 import { i18nTime, Trans, useI18n } from '@affine/i18n';
-import { track } from '@affine/track';
+
 import type { DocMode } from '@blocksuite/affine/model';
 import type { Store, Workspace } from '@blocksuite/affine/store';
 import { CloseIcon, ToggleRightIcon } from '@blocksuite/icons/rc';
@@ -104,7 +104,7 @@ const HistoryEditorPreview = ({
 }: HistoryEditorPreviewProps) => {
   const onModeChangeWithTrack = useCallback(
     (mode: DocMode) => {
-      track.$.docHistory.$.switchPageMode({ mode });
+      
       onModeChange(mode);
     },
     [onModeChange]
@@ -199,7 +199,7 @@ const PlanPrompt = () => {
       activeTab: 'plans',
       scrollAnchor: 'cloudPricingPlan',
     });
-    track.$.docHistory.$.viewPlans();
+    
   }, [workspaceDialogService]);
 
   const t = useI18n();
@@ -554,7 +554,7 @@ export const GlobalPageHistoryModal = () => {
   const workspace = useService(WorkspaceService).workspace;
   const handleOpenChange = useCallback(
     (open: boolean) => {
-      track.$.docHistory.$[open ? 'open' : 'close']();
+      
       setState(prev => ({
         ...prev,
         open,

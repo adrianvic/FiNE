@@ -1,5 +1,5 @@
 import type { useI18n } from '@affine/i18n';
-import { track } from '@affine/track';
+
 import { SettingsIcon } from '@blocksuite/icons/rc';
 import { appSettingAtom } from '@toeverything/infra';
 import type { createStore } from 'jotai';
@@ -36,10 +36,7 @@ export function registerAffineSettingsCommands({
       icon: <SettingsIcon />,
       preconditionStrategy: () => theme.theme !== 'system',
       run() {
-        track.$.cmdk.settings.changeAppSetting({
-          key: 'theme',
-          value: 'system',
-        });
+        
         theme.setTheme('system');
       },
     })
@@ -54,10 +51,7 @@ export function registerAffineSettingsCommands({
       icon: <SettingsIcon />,
       preconditionStrategy: () => theme.theme !== 'dark',
       run() {
-        track.$.cmdk.settings.changeAppSetting({
-          key: 'theme',
-          value: 'dark',
-        });
+        
         theme.setTheme('dark');
       },
     })
@@ -73,10 +67,7 @@ export function registerAffineSettingsCommands({
       icon: <SettingsIcon />,
       preconditionStrategy: () => theme.theme !== 'light',
       run() {
-        track.$.cmdk.settings.changeAppSetting({
-          key: 'theme',
-          value: 'light',
-        });
+        
 
         theme.setTheme('light');
       },
@@ -94,10 +85,7 @@ export function registerAffineSettingsCommands({
       icon: <SettingsIcon />,
       preconditionStrategy: () => settings$.value.fontFamily !== 'Sans',
       run() {
-        track.$.cmdk.settings.changeAppSetting({
-          key: 'fontStyle',
-          value: 'Sans',
-        });
+        
 
         updateSettings('fontFamily', 'Sans');
       },
@@ -114,10 +102,7 @@ export function registerAffineSettingsCommands({
       icon: <SettingsIcon />,
       preconditionStrategy: () => settings$.value.fontFamily !== 'Serif',
       run() {
-        track.$.cmdk.settings.changeAppSetting({
-          key: 'fontStyle',
-          value: 'Serif',
-        });
+        
 
         updateSettings('fontFamily', 'Serif');
       },
@@ -134,10 +119,7 @@ export function registerAffineSettingsCommands({
       icon: <SettingsIcon />,
       preconditionStrategy: () => settings$.value.fontFamily !== 'Mono',
       run() {
-        track.$.cmdk.settings.changeAppSetting({
-          key: 'fontStyle',
-          value: 'Mono',
-        });
+        
 
         updateSettings('fontFamily', 'Mono');
       },
@@ -158,10 +140,7 @@ export function registerAffineSettingsCommands({
       icon: <SettingsIcon />,
       preconditionStrategy: () => BUILD_CONFIG.isElectron,
       run() {
-        track.$.cmdk.settings.changeAppSetting({
-          key: 'clientBorder',
-          value: store.get(appSettingAtom).clientBorder ? 'off' : 'on',
-        });
+        
         store.set(appSettingAtom, prev => ({
           ...prev,
           clientBorder: !prev.clientBorder,
@@ -182,10 +161,7 @@ export function registerAffineSettingsCommands({
       category: 'affine:settings',
       icon: <SettingsIcon />,
       run() {
-        track.$.cmdk.settings.changeAppSetting({
-          key: 'fullWidthLayout',
-          value: settings$.value.fullWidthLayout ? 'off' : 'on',
-        });
+        
         updateSettings('fullWidthLayout', !settings$.value.fullWidthLayout);
       },
     })
@@ -206,10 +182,7 @@ export function registerAffineSettingsCommands({
       icon: <SettingsIcon />,
       preconditionStrategy: () => BUILD_CONFIG.isElectron,
       run() {
-        track.$.cmdk.settings.changeAppSetting({
-          key: 'enableNoisyBackground',
-          value: store.get(appSettingAtom).enableNoisyBackground ? 'off' : 'on',
-        });
+        
 
         store.set(appSettingAtom, prev => ({
           ...prev,
@@ -233,10 +206,7 @@ export function registerAffineSettingsCommands({
       preconditionStrategy: () =>
         BUILD_CONFIG.isElectron && environment.isMacOs,
       run() {
-        track.$.cmdk.settings.changeAppSetting({
-          key: 'enableBlurBackground',
-          value: store.get(appSettingAtom).enableBlurBackground ? 'off' : 'on',
-        });
+        
         store.set(appSettingAtom, prev => ({
           ...prev,
           enableBlurBackground: !prev.enableBlurBackground,

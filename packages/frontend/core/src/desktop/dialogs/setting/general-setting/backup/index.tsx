@@ -17,7 +17,7 @@ import { useNavigateHelper } from '@affine/core/components/hooks/use-navigate-he
 import { BackupService } from '@affine/core/modules/backup/services';
 import { toArrayBuffer } from '@affine/core/utils/array-buffer';
 import { i18nTime, useI18n } from '@affine/i18n';
-import track from '@affine/track';
+
 import {
   DeleteIcon,
   LocalWorkspaceIcon,
@@ -80,7 +80,7 @@ const BackupWorkspaceItem = ({ item }: { item: BackupWorkspaceItem }) => {
 
   const handleImport = useAsyncCallback(async () => {
     setImporting(true);
-    track.$.settingsPanel.archivedWorkspaces.recoverArchivedWorkspace();
+    
     const workspaceId = await backupService.recoverBackupWorkspace(item.id);
     if (!workspaceId) {
       setImporting(false);
@@ -110,7 +110,7 @@ const BackupWorkspaceItem = ({ item }: { item: BackupWorkspaceItem }) => {
         title: t['com.affine.workspaceDelete.title'](),
         children: t['com.affine.settings.workspace.backup.delete.warning'](),
         onConfirm: async () => {
-          track.$.settingsPanel.archivedWorkspaces.deleteArchivedWorkspace();
+          
           await backupService.deleteBackupWorkspace(backupWorkspaceId);
           notify.success({
             title: t['com.affine.settings.workspace.backup.delete.success'](),

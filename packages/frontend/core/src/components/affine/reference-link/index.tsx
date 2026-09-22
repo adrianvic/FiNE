@@ -4,7 +4,7 @@ import { JournalService } from '@affine/core/modules/journal';
 import { PeekViewService } from '@affine/core/modules/peek-view/services/peek-view';
 import { useInsidePeekView } from '@affine/core/modules/peek-view/view/modal-container';
 import { WorkbenchLink } from '@affine/core/modules/workbench';
-import { track } from '@affine/track';
+
 import type { DocMode } from '@blocksuite/affine/model';
 import type { Workspace } from '@blocksuite/affine/store';
 import { LiveData, useLiveData, useService } from '@toeverything/infra';
@@ -107,9 +107,7 @@ export function AffinePageReference({
       }
 
       if (isJournal) {
-        track.doc.editor.pageRef.navigate({
-          to: 'journal',
-        });
+        
       }
 
       if (e.shiftKey && ref.current) {
@@ -185,9 +183,7 @@ export function AffineSharedPageReference({
       }
 
       if (isJournal) {
-        track.doc.editor.pageRef.navigate({
-          to: 'journal',
-        });
+        
       }
 
       // update refresh key

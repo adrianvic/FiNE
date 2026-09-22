@@ -1,5 +1,5 @@
 import { RadioGroup, type RadioItem } from '@affine/component';
-import track from '@affine/track';
+
 import { useCallback } from 'react';
 
 import {
@@ -35,9 +35,7 @@ export const ViewToggle = ({
 }) => {
   const handleViewChange = useCallback(
     (view: DocListItemView) => {
-      track.allDocs.header.viewMode.editDisplayMenu({
-        type: view,
-      });
+      
       onViewChange(view);
     },
     [onViewChange]

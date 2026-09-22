@@ -2,7 +2,7 @@ import { NavigationPanelTreeRoot } from '@affine/core/desktop/components/navigat
 import { NavigationPanelService } from '@affine/core/modules/navigation-panel';
 import { TagService } from '@affine/core/modules/tag';
 import { useI18n } from '@affine/i18n';
-import { track } from '@affine/track';
+
 import { AddTagIcon } from '@blocksuite/icons/rc';
 import { useLiveData, useServices } from '@toeverything/infra';
 import { useCallback, useMemo, useState } from 'react';
@@ -35,7 +35,7 @@ export const NavigationPanelTags = () => {
     (name: string, color: string) => {
       setShowNewTagDialog(false);
       tagService.tagList.createTag(name, color);
-      track.$.navigationPanel.organize.createOrganizeItem({ type: 'tag' });
+      
       navigationPanelService.setCollapsed(path, false);
     },
     [navigationPanelService, path, tagService]

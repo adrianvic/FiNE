@@ -13,7 +13,7 @@ import { GuardService } from '@affine/core/modules/permissions';
 import { WorkspaceService } from '@affine/core/modules/workspace';
 import { UserFriendlyError } from '@affine/error';
 import { useI18n } from '@affine/i18n';
-import { track } from '@affine/track';
+
 import {
   EdgelessIcon,
   HistoryIcon,
@@ -140,7 +140,7 @@ export function useRegisterBlocksuiteEditorCommands(
         icon: mode === 'page' ? <PageIcon /> : <EdgelessIcon />,
         label: t['com.affine.page-properties.page-info.view'](),
         run() {
-          track.$.cmdk.docInfo.open();
+          
 
           openInfoModal();
         },
@@ -158,7 +158,7 @@ export function useRegisterBlocksuiteEditorCommands(
           : t['com.affine.favoritePageOperation.add'](),
         run() {
           favAdapter.toggle(docId, 'doc');
-          track.$.cmdk.editor.toggleFavorite();
+          
 
           toast(
             favorite
@@ -183,9 +183,7 @@ export function useRegisterBlocksuiteEditorCommands(
             : t['com.affine.pageMode.page']()
         }`,
         run() {
-          track.$.cmdk.editor.switchPageMode({
-            mode: mode === 'page' ? 'edgeless' : 'page',
-          });
+          
 
           editor.toggleMode();
           toast(
@@ -230,9 +228,7 @@ export function useRegisterBlocksuiteEditorCommands(
         label: t['com.affine.header.option.duplicate'](),
         run() {
           duplicate(docId);
-          track.$.cmdk.editor.createDoc({
-            control: 'duplicate',
-          });
+          
         },
       })
     );
@@ -245,9 +241,7 @@ export function useRegisterBlocksuiteEditorCommands(
         icon: mode === 'page' ? <PageIcon /> : <EdgelessIcon />,
         label: t['Export to HTML'](),
         async run() {
-          track.$.cmdk.editor.export({
-            type: 'html',
-          });
+          
 
           exportHandler('html');
         },
@@ -262,9 +256,7 @@ export function useRegisterBlocksuiteEditorCommands(
         icon: mode === 'page' ? <PageIcon /> : <EdgelessIcon />,
         label: t['Export to PNG'](),
         async run() {
-          track.$.cmdk.editor.export({
-            type: 'png',
-          });
+          
 
           exportHandler('png');
         },
@@ -279,9 +271,7 @@ export function useRegisterBlocksuiteEditorCommands(
         icon: mode === 'page' ? <PageIcon /> : <EdgelessIcon />,
         label: t['Export to Markdown'](),
         async run() {
-          track.$.cmdk.editor.export({
-            type: 'markdown',
-          });
+          
 
           exportHandler('markdown');
         },
@@ -296,9 +286,7 @@ export function useRegisterBlocksuiteEditorCommands(
         icon: mode === 'page' ? <PageIcon /> : <EdgelessIcon />,
         label: t['Export to Snapshot'](),
         async run() {
-          track.$.cmdk.editor.export({
-            type: 'snapshot',
-          });
+          
 
           exportHandler('snapshot');
         },
@@ -313,7 +301,7 @@ export function useRegisterBlocksuiteEditorCommands(
         icon: mode === 'page' ? <PageIcon /> : <EdgelessIcon />,
         label: t['com.affine.moveToTrash.title'](),
         run() {
-          track.$.cmdk.editor.deleteDoc();
+          
 
           onClickDelete();
         },
@@ -334,7 +322,7 @@ export function useRegisterBlocksuiteEditorCommands(
             toast(t['com.affine.no-permission']());
             return;
           }
-          track.$.cmdk.editor.restoreDoc();
+          
 
           await doc.restoreFromTrash();
         },
@@ -349,7 +337,7 @@ export function useRegisterBlocksuiteEditorCommands(
           icon: <HistoryIcon />,
           label: t['com.affine.cmdk.affine.editor.reveal-page-history-modal'](),
           run() {
-            track.$.cmdk.docHistory.open();
+            
 
             openHistoryModal();
           },

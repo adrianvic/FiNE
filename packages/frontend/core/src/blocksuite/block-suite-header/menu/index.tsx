@@ -22,7 +22,7 @@ import { WorkbenchService } from '@affine/core/modules/workbench';
 import { ViewService } from '@affine/core/modules/workbench/services/view';
 import { WorkspaceService } from '@affine/core/modules/workspace';
 import { useI18n } from '@affine/i18n';
-import { track } from '@affine/track';
+
 import type { Store } from '@blocksuite/affine/store';
 import {
   DuplicateIcon,
@@ -75,12 +75,12 @@ export const PageHeaderMenuButton = ({
 
   const handleMenuOpenChange = useCallback((open: boolean) => {
     if (open) {
-      track.$.header.docOptions.open();
+      
     }
   }, []);
 
   const openHistoryModal = useCallback(() => {
-    track.$.header.history.open();
+    
     if (workspace.flavour !== 'local') {
       return setHistoryModalOpen(true);
     }
@@ -176,7 +176,7 @@ const PageHeaderMenuItem = ({
 
   const workspaceDialogService = useService(WorkspaceDialogService);
   const openInfoModal = useCallback(() => {
-    track.$.header.pageInfo.open();
+    
     workspaceDialogService.open('doc-info', { docId: pageId });
   }, [workspaceDialogService, pageId]);
 
@@ -195,7 +195,7 @@ const PageHeaderMenuItem = ({
   const { openConfirmModal } = useConfirmModal();
 
   const handleOpenTrashModal = useCallback(() => {
-    track.$.header.docOptions.deleteDoc();
+    
     openConfirmModal({
       title: t['com.affine.moveToTrash.confirmModal.title'](),
       description: t['com.affine.moveToTrash.confirmModal.description']({
@@ -219,16 +219,14 @@ const PageHeaderMenuItem = ({
 
   const handleRename = useCallback(() => {
     rename?.();
-    track.$.header.docOptions.renameDoc();
+    
   }, [rename]);
 
   const handleSwitchMode = useCallback(() => {
     const mode = primaryMode === 'page' ? 'edgeless' : 'page';
     editorService.editor.setMode(mode);
     editorService.editor.doc.setPrimaryMode(mode);
-    track.$.header.docOptions.switchPageMode({
-      mode,
-    });
+    
     notify.success({
       title:
         primaryMode === 'page'
@@ -245,9 +243,7 @@ const PageHeaderMenuItem = ({
 
   const handleDuplicate = useCallback(() => {
     duplicate(pageId);
-    track.$.header.docOptions.createDoc({
-      control: 'duplicate',
-    });
+    
   }, [duplicate, pageId]);
 
   const handleOpenDocs = useCallback(
@@ -275,7 +271,7 @@ const PageHeaderMenuItem = ({
   );
 
   const handleOpenImportModal = useCallback(() => {
-    track.$.header.importModal.open();
+    
     workspaceDialogService.open('import', undefined, payload => {
       if (!payload) {
         return;
@@ -286,12 +282,12 @@ const PageHeaderMenuItem = ({
 
   const handleShareMenuOpenChange = useCallback((open: boolean) => {
     if (open) {
-      track.$.sharePanel.$.open();
+      
     }
   }, []);
 
   const handleToggleFavorite = useCallback(() => {
-    track.$.header.docOptions.toggleFavorite();
+    
     toggleFavorite();
   }, [toggleFavorite]);
 

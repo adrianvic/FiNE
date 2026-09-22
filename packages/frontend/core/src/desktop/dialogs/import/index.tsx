@@ -19,7 +19,7 @@ import {
 } from '@affine/core/modules/workspace';
 import { DebugLogger } from '@affine/debug';
 import { useI18n } from '@affine/i18n';
-import track from '@affine/track';
+
 import { openDirectory, openFilesWith } from '@blocksuite/affine/shared/utils';
 import type { Workspace } from '@blocksuite/affine/store';
 import {
@@ -684,9 +684,7 @@ export const ImportDialog = ({
 
   const handleImportAffineFile = useMemo(() => {
     return async () => {
-      track.$.navigationPanel.workspaceList.createWorkspace({
-        control: 'import',
-      });
+      
 
       return new Promise<WorkspaceMetadata | undefined>((resolve, reject) => {
         globalDialogService.open(
@@ -735,10 +733,7 @@ export const ImportDialog = ({
 
         if (acceptType !== 'Skip') {
           setStatus('importing');
-          track.$.importModal.$.import({
-            type,
-            status: 'importing',
-          });
+          
         }
 
         const abortController = new AbortController();
@@ -773,26 +768,14 @@ export const ImportDialog = ({
           warnings,
         });
         setStatus('success');
-        track.$.importModal.$.import({
-          type,
-          status: 'success',
-          result: {
-            docCount: docIds.length,
-          },
-        });
-        track.$.importModal.$.createDoc({
-          control: 'import',
-        });
+        
+        
       } catch (error) {
         importAbortControllerRef.current = null;
         const structuredError = toImportErrorState(error);
         setImportError(structuredError);
         setStatus('error');
-        track.$.importModal.$.import({
-          type,
-          status: 'failed',
-          error: structuredError.message || undefined,
-        });
+        
         logger.error('Failed to import', error);
       }
     },

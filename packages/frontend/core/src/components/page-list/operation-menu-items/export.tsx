@@ -1,7 +1,7 @@
 import { MenuItem, MenuSeparator, MenuSub } from '@affine/component';
 import { FeatureFlagService } from '@affine/core/modules/feature-flag';
 import { useI18n } from '@affine/i18n';
-import { track } from '@affine/track';
+
 import {
   ExportIcon,
   ExportToHtmlIcon,
@@ -157,7 +157,7 @@ export const Export = ({ exportHandler, className, pageMode }: ExportProps) => {
   );
   const handleExportMenuOpenChange = useCallback((open: boolean) => {
     if (open) {
-      track.$.header.docOptions.export();
+      
     }
   }, []);
 

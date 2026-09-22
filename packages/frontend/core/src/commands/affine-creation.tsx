@@ -1,5 +1,5 @@
 import type { useI18n } from '@affine/i18n';
-import { track } from '@affine/track';
+
 import type { DocMode } from '@blocksuite/affine/model';
 import { ImportIcon, PlusIcon } from '@blocksuite/icons/rc';
 
@@ -30,7 +30,7 @@ export function registerAffineCreationCommands({
           }
         : undefined,
       run() {
-        track.$.cmdk.creation.createDoc({ mode: 'page' });
+        
 
         pageHelper.createPage('page' as DocMode);
       },
@@ -44,9 +44,7 @@ export function registerAffineCreationCommands({
       icon: <PlusIcon />,
       label: t['com.affine.cmdk.affine.new-edgeless-page'](),
       run() {
-        track.$.cmdk.creation.createDoc({
-          mode: 'edgeless',
-        });
+        
 
         pageHelper.createEdgeless();
       },
@@ -61,7 +59,7 @@ export function registerAffineCreationCommands({
         icon: <PlusIcon />,
         label: t['com.affine.cmdk.affine.new-workspace'](),
         run() {
-          track.$.cmdk.workspace.createWorkspace();
+          
 
           globalDialogService.open('create-workspace', {});
         },
@@ -78,9 +76,7 @@ export function registerAffineCreationCommands({
         return BUILD_CONFIG.isElectron;
       },
       run() {
-        track.$.cmdk.workspace.createWorkspace({
-          control: 'import',
-        });
+        
 
         globalDialogService.open('import-workspace', undefined);
       },

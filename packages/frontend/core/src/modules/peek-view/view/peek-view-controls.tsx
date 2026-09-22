@@ -1,7 +1,7 @@
 import { IconButton, notify } from '@affine/component';
 import { copyTextToClipboard } from '@affine/core/utils/clipboard';
 import { useI18n } from '@affine/i18n';
-import track from '@affine/track';
+
 import type { DocMode } from '@blocksuite/affine/model';
 import {
   CloseIcon,
@@ -243,7 +243,7 @@ export const AttachmentPeekViewControls = ({
           workbench.openAttachment(docId, blockId);
           peekView.close(false);
 
-          track.$.attachment.$.openAttachmentInFullscreen({ type });
+          
         },
         enabled: BUILD_CONFIG.isDesktopEdition,
       },
@@ -255,7 +255,7 @@ export const AttachmentPeekViewControls = ({
           workbench.openAttachment(docId, blockId, { at: 'new-tab' });
           peekView.close(false);
 
-          track.$.attachment.$.openAttachmentInNewTab({ type });
+          
         },
         enabled: true,
       },
@@ -269,7 +269,7 @@ export const AttachmentPeekViewControls = ({
           workbench.openAttachment(docId, blockId, { at: 'beside' });
           peekView.close(false);
 
-          track.$.attachment.$.openAttachmentInSplitView({ type });
+          
         },
         enabled: BUILD_CONFIG.isElectron,
       },
@@ -279,7 +279,7 @@ export const AttachmentPeekViewControls = ({
   useEffect(() => {
     if (type === undefined) return;
 
-    track.$.attachment.$.openAttachmentInPeekView({ type });
+    
   }, [type]);
 
   return (

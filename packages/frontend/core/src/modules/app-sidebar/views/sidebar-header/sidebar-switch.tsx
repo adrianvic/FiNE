@@ -1,6 +1,6 @@
 import { IconButton } from '@affine/component';
 import { NotificationCountService } from '@affine/core/modules/notification';
-import { track } from '@affine/track';
+
 import { SidebarIcon } from '@blocksuite/icons/rc';
 import { useLiveData, useService } from '@toeverything/infra';
 import clsx from 'clsx';
@@ -34,9 +34,7 @@ export const SidebarSwitch = ({
   }, [appSidebarService, open, preventHovering]);
 
   const handleClickSwitch = useCallback(() => {
-    track.$.navigationPanel.$.toggle({
-      type: open ? 'collapse' : 'expand',
-    });
+    
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
     }

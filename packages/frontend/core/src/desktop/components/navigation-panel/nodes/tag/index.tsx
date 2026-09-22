@@ -9,7 +9,7 @@ import type { Tag } from '@affine/core/modules/tag';
 import { TagService } from '@affine/core/modules/tag';
 import type { AffineDNDData } from '@affine/core/types/dnd';
 import { useI18n } from '@affine/i18n';
-import { track } from '@affine/track';
+
 import { useLiveData, useService, useServices } from '@toeverything/infra';
 import clsx from 'clsx';
 import { useCallback, useMemo } from 'react';
@@ -95,9 +95,7 @@ export const NavigationPanelTagNode = ({
     (newName: string) => {
       if (tagRecord && tagRecord.value$.value !== newName) {
         tagRecord.rename(newName);
-        track.$.navigationPanel.organize.renameOrganizeItem({
-          type: 'tag',
-        });
+        
       }
     },
     [tagRecord]
@@ -108,12 +106,8 @@ export const NavigationPanelTagNode = ({
       if (data.treeInstruction?.type === 'make-child' && tagRecord) {
         if (data.source.data.entity?.type === 'doc') {
           tagRecord.tag(data.source.data.entity.id);
-          track.$.navigationPanel.tags.tagDoc({
-            control: 'drag',
-          });
-          track.$.navigationPanel.tags.drop({
-            type: data.source.data.entity.type,
-          });
+          
+          
         } else {
           toast(t['com.affine.rootAppSidebar.tag.doc-only']());
         }

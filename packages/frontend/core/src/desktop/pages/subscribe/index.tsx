@@ -2,7 +2,7 @@ import { Button, Loading } from '@affine/component';
 import { UrlService } from '@affine/core/modules/url';
 import { UserFriendlyError } from '@affine/error';
 import { SubscriptionPlan, SubscriptionRecurring } from '@affine/graphql';
-import { track } from '@affine/track';
+
 import { effect, fromPromise, useServices } from '@toeverything/infra';
 import { nanoid } from 'nanoid';
 import { useEffect, useMemo, useState } from 'react';
@@ -121,11 +121,7 @@ export const Component = () => {
             // should never reach
             if (!account) throw new Error('No account');
 
-            track.subscriptionLanding.$.$.checkout({
-              control: 'pricing',
-              plan,
-              recurring,
-            });
+            
 
             const checkout = await subscriptionService.createCheckoutSession({
               idempotencyKey,

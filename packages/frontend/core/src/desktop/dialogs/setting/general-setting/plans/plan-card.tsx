@@ -16,7 +16,7 @@ import {
   SubscriptionStatus,
 } from '@affine/graphql';
 import { Trans, useI18n } from '@affine/i18n';
-import { track } from '@affine/track';
+
 import { DoneIcon } from '@blocksuite/icons/rc';
 import { useLiveData, useService } from '@toeverything/infra';
 import clsx from 'clsx';
@@ -284,10 +284,7 @@ export const Upgrade = ({
   const schema = urlService.getClientScheme();
 
   const handleBeforeCheckout = useCallback(() => {
-    track.$.settingsPanel.plans.checkout({
-      plan: plan,
-      recurring: recurring,
-    });
+    
     onBeforeCheckout?.();
   }, [onBeforeCheckout, plan, recurring]);
 
@@ -354,10 +351,7 @@ const ChangeRecurring = ({
   const subscription = useService(SubscriptionService).subscription;
 
   const onStartChange = useCallback(() => {
-    track.$.settingsPanel.plans.changeSubscriptionRecurring({
-      plan: SubscriptionPlan.Pro,
-      recurring: to,
-    });
+    
     setOpen(true);
   }, [to]);
 
@@ -435,10 +429,7 @@ const ResumeButton = () => {
     setOpen(true);
     const pro = subscription.pro$.value;
     if (pro) {
-      track.$.settingsPanel.plans.resumeSubscription({
-        plan: SubscriptionPlan.Pro,
-        recurring: pro.recurring,
-      });
+      
     }
   }, [subscription.pro$.value]);
 

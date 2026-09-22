@@ -5,7 +5,7 @@ import { GlobalDialogService } from '@affine/core/modules/dialogs';
 import { type WorkspaceMetadata } from '@affine/core/modules/workspace';
 import { ServerFeature } from '@affine/graphql';
 import { useI18n } from '@affine/i18n';
-import { track } from '@affine/track';
+
 import { Logo1Icon } from '@blocksuite/icons/rc';
 import { useLiveData, useService } from '@toeverything/infra';
 import { useCallback } from 'react';
@@ -20,7 +20,7 @@ export const SignInItem = () => {
   const t = useI18n();
 
   const onClickSignIn = useCallback(() => {
-    track.$.navigationPanel.workspaceList.requestSignIn();
+    
     globalDialogService.open('sign-in', {});
   }, [globalDialogService]);
 
@@ -83,7 +83,7 @@ export const UserWithWorkspaceList = ({
     if (!isAuthenticated && !enableLocalWorkspace) {
       return openSignInModal();
     }
-    track.$.navigationPanel.workspaceList.createWorkspace();
+    
     globalDialogService.open('create-workspace', {}, payload => {
       if (payload) {
         onCreatedWorkspace?.(payload);
@@ -100,9 +100,7 @@ export const UserWithWorkspaceList = ({
   ]);
 
   const onAddWorkspace = useCallback(() => {
-    track.$.navigationPanel.workspaceList.createWorkspace({
-      control: 'import',
-    });
+    
     globalDialogService.open('import-workspace', undefined, payload => {
       if (payload) {
         onCreatedWorkspace?.({ metadata: payload.workspace });

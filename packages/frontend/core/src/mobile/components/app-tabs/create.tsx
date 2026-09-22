@@ -4,7 +4,7 @@ import { DocsService } from '@affine/core/modules/doc';
 import { TemplateDocService } from '@affine/core/modules/template-doc';
 import { WorkbenchService } from '@affine/core/modules/workbench';
 import { WorkspaceService } from '@affine/core/modules/workspace';
-import track from '@affine/track';
+
 import { EditIcon } from '@blocksuite/icons/rc';
 import { useLiveData, useService } from '@toeverything/infra';
 
@@ -37,7 +37,7 @@ export const AppTabCreate = ({ tab }: AppTabCustomFCProps) => {
         const doc = pageHelper.createPage(undefined, { show: false });
         workbench.openDoc(doc.id);
       }
-      track.$.navigationPanel.$.createDoc();
+      
     },
     [docsService, enablePageTemplate, pageHelper, pageTemplateDocId, workbench]
   );

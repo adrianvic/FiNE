@@ -7,7 +7,7 @@ import type { AffineEditorContainer } from '@affine/core/blocksuite/block-suite-
 import { EditorService } from '@affine/core/modules/editor';
 import { getAFFiNEWorkspaceSchema } from '@affine/core/modules/workspace/global-schema';
 import { useI18n } from '@affine/i18n';
-import { track } from '@affine/track';
+
 import { ExportManager } from '@blocksuite/affine/blocks/surface';
 import {
   docLinkBaseURLMiddleware,
@@ -177,9 +177,7 @@ async function exportHandler({
   editorContainer,
 }: ExportHandlerOptions): Promise<boolean> {
   const editorRoot = document.querySelector('editor-host');
-  track.$.sharePanel.$.export({
-    type,
-  });
+  
   switch (type) {
     case 'html':
       await exportToHtml(page, editorRoot?.std);

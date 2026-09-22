@@ -5,7 +5,7 @@ import {
   TemplateListMenuContentScrollable,
 } from '@affine/core/modules/template-doc/view/template-list-menu';
 import { useI18n } from '@affine/i18n';
-import track from '@affine/track';
+
 import { TemplateIcon } from '@blocksuite/icons/rc';
 import { useCallback, useState } from 'react';
 
@@ -18,7 +18,7 @@ export const TemplateDocEntrance = () => {
   }, []);
 
   const onMenuOpenChange = useCallback((open: boolean) => {
-    if (open) track.$.sidebar.template.openTemplateListMenu();
+    if (open) 
     setMenuOpen(open);
   }, []);
 

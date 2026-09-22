@@ -11,7 +11,7 @@ import { useAsyncCallback } from '@affine/core/components/hooks/affine-async-hoo
 import { useCatchEventCallback } from '@affine/core/components/hooks/use-catch-event-hook';
 import type { AffineDNDData } from '@affine/core/types/dnd';
 import { useI18n } from '@affine/i18n';
-import { track } from '@affine/track';
+
 import { CloseIcon, PlusIcon, RightSidebarIcon } from '@blocksuite/icons/rc';
 import {
   useLiveData,
@@ -88,15 +88,9 @@ const WorkbenchView = ({
       }
       await tabsHeaderService.activateView?.(workbench.id, viewIdx);
       if (tabActive) {
-        track.$.appTabsHeader.$.tabAction({
-          control: 'click',
-          action: 'switchSplitView',
-        });
+        
       } else {
-        track.$.appTabsHeader.$.tabAction({
-          control: 'click',
-          action: 'switchTab',
-        });
+        
       }
     },
     [activeViewIndex, tabActive, tabsHeaderService, workbench.id]
@@ -114,10 +108,7 @@ const WorkbenchView = ({
     async e => {
       if (e.button === 1) {
         await tabsHeaderService.closeTab?.(workbench.id);
-        track.$.appTabsHeader.$.tabAction({
-          control: 'midClick',
-          action: 'close',
-        });
+        
       }
     },
     [tabsHeaderService, workbench.id]
@@ -133,39 +124,24 @@ const WorkbenchView = ({
       );
       switch (action?.type) {
         case 'open-in-split-view': {
-          track.$.appTabsHeader.$.tabAction({
-            control: 'contextMenu',
-            action: 'openInSplitView',
-          });
+          
           break;
         }
         case 'separate-view': {
-          track.$.appTabsHeader.$.tabAction({
-            control: 'contextMenu',
-            action: 'separateTabs',
-          });
+          
           break;
         }
         case 'pin-tab': {
           if (action.payload.shouldPin) {
-            track.$.appTabsHeader.$.tabAction({
-              control: 'contextMenu',
-              action: 'pin',
-            });
+            
           } else {
-            track.$.appTabsHeader.$.tabAction({
-              control: 'contextMenu',
-              action: 'unpin',
-            });
+            
           }
           break;
         }
         // fixme: when close tab the view may already be gc'ed
         case 'close-tab': {
-          track.$.appTabsHeader.$.tabAction({
-            control: 'contextMenu',
-            action: 'close',
-          });
+          
           break;
         }
         default:
@@ -230,10 +206,7 @@ const WorkbenchTab = ({
 
   const handleCloseTab = useCatchEventCallback(async () => {
     await tabsHeaderService.closeTab?.(workbench.id);
-    track.$.appTabsHeader.$.tabAction({
-      control: 'xButton',
-      action: 'close',
-    });
+    
   }, [tabsHeaderService, workbench.id]);
 
   const { dropTargetRef, closestEdge } = useDropTarget<AffineDNDData>(
@@ -288,9 +261,7 @@ const WorkbenchTab = ({
         };
       },
       onDragStart: () => {
-        track.$.appTabsHeader.$.dragStart({
-          type: 'tab',
-        });
+        
       },
     };
   }, [dnd, workbench.basename, workbench.id, workbench.views]);
@@ -398,10 +369,7 @@ export const AppTabsHeader = ({
 
   const onAddTab = useAsyncCallback(async () => {
     await tabsHeaderService.onAddTab?.();
-    track.$.appTabsHeader.$.tabAction({
-      control: 'click',
-      action: 'openInNewTab',
-    });
+    
   }, [tabsHeaderService]);
 
   const onToggleRightSidebar = useAsyncCallback(async () => {
@@ -427,10 +395,7 @@ export const AppTabsHeader = ({
         if (targetId === data.source.data.from.tabId) {
           return;
         }
-        track.$.appTabsHeader.$.tabAction({
-          control: 'dnd',
-          action: 'moveTab',
-        });
+        
         return await tabsHeaderService.moveTab?.(
           data.source.data.from.tabId,
           targetId,
@@ -439,11 +404,7 @@ export const AppTabsHeader = ({
       }
 
       if (data.source.data.entity?.type === 'doc') {
-        track.$.appTabsHeader.$.tabAction({
-          control: 'dnd',
-          action: 'openInNewTab',
-          type: 'doc',
-        });
+        
         return await tabsHeaderService.onAddDocTab?.(
           data.source.data.entity.id,
           targetId,
@@ -452,11 +413,7 @@ export const AppTabsHeader = ({
       }
 
       if (data.source.data.entity?.type === 'tag') {
-        track.$.appTabsHeader.$.tabAction({
-          type: 'tag',
-          control: 'dnd',
-          action: 'openInNewTab',
-        });
+        
         return await tabsHeaderService.onAddTagTab?.(
           data.source.data.entity.id,
           targetId,
@@ -465,11 +422,7 @@ export const AppTabsHeader = ({
       }
 
       if (data.source.data.entity?.type === 'collection') {
-        track.$.appTabsHeader.$.tabAction({
-          type: 'collection',
-          control: 'dnd',
-          action: 'openInNewTab',
-        });
+        
         return await tabsHeaderService.onAddCollectionTab?.(
           data.source.data.entity.id,
           targetId,

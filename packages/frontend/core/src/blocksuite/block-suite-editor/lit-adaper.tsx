@@ -23,7 +23,7 @@ import { JournalService } from '@affine/core/modules/journal';
 import { useInsidePeekView } from '@affine/core/modules/peek-view';
 import { WorkspaceService } from '@affine/core/modules/workspace';
 import { ServerFeature } from '@affine/graphql';
-import track from '@affine/track';
+
 import type { DocTitle } from '@blocksuite/affine/fragments/doc-title';
 import type { DocMode } from '@blocksuite/affine/model';
 import type { Store } from '@blocksuite/affine/store';
@@ -222,33 +222,23 @@ export const BlocksuiteDocEditor = forwardRef<
   );
 
   const onPropertyChange = useCallback((property: DocCustomPropertyInfo) => {
-    track.doc.inlineDocInfo.property.editProperty({
-      type: property.type,
-    });
+    
   }, []);
 
   const onPropertyAdded = useCallback((property: DocCustomPropertyInfo) => {
-    track.doc.inlineDocInfo.property.addProperty({
-      type: property.type,
-      control: 'at menu',
-    });
+    
   }, []);
 
   const onDatabasePropertyChange = useCallback(
     (_row: DatabaseRow, cell: DatabaseValueCell) => {
-      track.doc.inlineDocInfo.databaseProperty.editProperty({
-        type: cell.property.type$.value,
-      });
+      
     },
     []
   );
 
   const onPropertyInfoChange = useCallback(
     (property: DocCustomPropertyInfo, field: string) => {
-      track.doc.inlineDocInfo.property.editPropertyMeta({
-        type: property.type,
-        field,
-      });
+      
     },
     []
   );

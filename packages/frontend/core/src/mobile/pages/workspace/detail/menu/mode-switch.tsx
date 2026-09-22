@@ -4,7 +4,7 @@ import {
   useMobileMenuController,
 } from '@affine/component';
 import { EditorService } from '@affine/core/modules/editor';
-import track from '@affine/track';
+
 import type { DocMode } from '@blocksuite/affine/model';
 import { useLiveData, useService } from '@toeverything/infra';
 import { useCallback } from 'react';
@@ -34,7 +34,7 @@ export const EditorModeSwitch = () => {
     (mode: DocMode) => {
       editor.setMode(mode);
       editor.setSelector(undefined);
-      track.$.header.actions.switchPageMode({ mode });
+      
       close();
     },
     [close, editor]

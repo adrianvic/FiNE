@@ -8,7 +8,7 @@ import {
 } from '@affine/core/modules/quicksearch';
 import { ExternalLinksQuickSearchSession } from '@affine/core/modules/quicksearch/impls/external-links';
 import { JournalsQuickSearchSession } from '@affine/core/modules/quicksearch/impls/journals';
-import { track } from '@affine/track';
+
 import {
   BookmarkSlashMenuConfigIdentifier,
   insertLinkByQuickSearchCommand,
@@ -158,14 +158,12 @@ export function patchQuickSearchService(framework: FrameworkProvider) {
                 if (!flavour) return;
 
                 if (flavour === 'affine:bookmark') {
-                  track.doc.editor.slashMenu.bookmark();
+                  
                   return;
                 }
 
                 if (flavour === 'affine:embed-linked-doc') {
-                  track.doc.editor.slashMenu.linkDoc({
-                    control: 'linkDoc',
-                  });
+                  
                   return;
                 }
               })

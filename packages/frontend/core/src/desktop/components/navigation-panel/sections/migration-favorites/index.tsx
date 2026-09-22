@@ -2,7 +2,7 @@ import { IconButton, useConfirmModal } from '@affine/component';
 import { DocsService } from '@affine/core/modules/doc';
 import { MigrationFavoriteItemsAdapter } from '@affine/core/modules/favorite';
 import { Trans, useI18n } from '@affine/i18n';
-import { track } from '@affine/track';
+
 import { BroomIcon, HelpIcon } from '@blocksuite/icons/rc';
 import { useLiveData, useServices } from '@toeverything/infra';
 import { useCallback, useMemo } from 'react';
@@ -91,7 +91,7 @@ export const NavigationPanelMigrationFavorites = () => {
         },
       },
     });
-    track.$.navigationPanel.migrationData.openMigrationDataHelp();
+    
   }, [handleClickClear, openConfirmModal, t]);
 
   if (favorites.length === 0 || migrated) {

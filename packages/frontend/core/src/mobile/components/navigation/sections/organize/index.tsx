@@ -3,7 +3,7 @@ import { NavigationPanelTreeRoot } from '@affine/core/desktop/components/navigat
 import { NavigationPanelService } from '@affine/core/modules/navigation-panel';
 import { OrganizeService } from '@affine/core/modules/organize';
 import { useI18n } from '@affine/i18n';
-import track from '@affine/track';
+
 import { AddOrganizeIcon } from '@blocksuite/icons/rc';
 import { useLiveData, useServices } from '@toeverything/infra';
 import { useCallback, useMemo, useState } from 'react';
@@ -35,7 +35,7 @@ export const NavigationPanelOrganize = () => {
         name,
         rootFolder.indexAt('before')
       );
-      track.$.navigationPanel.organize.createOrganizeItem({ type: 'folder' });
+      
       navigationPanelService.setCollapsed(path, false);
       return newFolderId;
     },

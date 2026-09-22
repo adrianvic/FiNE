@@ -5,7 +5,7 @@ import { WorkbenchService } from '@affine/core/modules/workbench';
 import { DebugLogger } from '@affine/debug';
 import { apis, events } from '@affine/electron-api';
 import { i18nTime } from '@affine/i18n';
-import track from '@affine/track';
+
 import type { AttachmentBlockModel } from '@blocksuite/affine/model';
 import type { Store } from '@blocksuite/affine/store';
 import type { BlobEngine } from '@blocksuite/affine/sync';
@@ -256,11 +256,7 @@ async function createRecordingDoc(
     audioAttachment?.obj
       .transcribe()
       .then(() => {
-        track.doc.editor.audioBlock.transcribeRecording({
-          type: 'Meeting record',
-          method: 'success',
-          option: 'Auto transcribing',
-        });
+        
       })
       .catch(err => {
         logger.error('Failed to transcribe recording', err);

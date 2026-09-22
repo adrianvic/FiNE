@@ -1,6 +1,6 @@
 import { MobileMenu } from '@affine/component';
 import { WorkspacesService } from '@affine/core/modules/workspace';
-import { track } from '@affine/track';
+
 import { useServiceOptional } from '@toeverything/infra';
 import {
   forwardRef,
@@ -21,7 +21,7 @@ export const WorkspaceSelector = forwardRef<
   const workspaceManager = useServiceOptional(WorkspacesService);
 
   const openMenu = useCallback(() => {
-    track.$.navigationPanel.workspaceList.open();
+    
     setOpen(true);
   }, []);
   const close = useCallback(() => {

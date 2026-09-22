@@ -6,7 +6,7 @@ import { CreatePropertyMenuItems } from '@affine/core/components/properties/menu
 import type { DocCustomPropertyInfo } from '@affine/core/modules/db';
 import { WorkspaceService } from '@affine/core/modules/workspace';
 import { Trans, useI18n } from '@affine/i18n';
-import track from '@affine/track';
+
 import { FrameworkScope, useService } from '@toeverything/infra';
 import { useCallback } from 'react';
 
@@ -16,18 +16,12 @@ const WorkspaceSettingPropertiesMain = () => {
   const t = useI18n();
 
   const onCreated = useCallback((property: DocCustomPropertyInfo) => {
-    track.$.settingsPanel.workspace.addProperty({
-      type: property.type,
-      control: 'at menu',
-    });
+    
   }, []);
 
   const onPropertyInfoChange = useCallback(
     (property: DocCustomPropertyInfo, field: string) => {
-      track.$.settingsPanel.workspace.editPropertyMeta({
-        type: property.type,
-        field,
-      });
+      
     },
     []
   );

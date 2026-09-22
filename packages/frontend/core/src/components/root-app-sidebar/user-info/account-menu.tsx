@@ -2,7 +2,7 @@ import { MenuItem } from '@affine/component';
 import { ServerService, UserFeatureService } from '@affine/core/modules/cloud';
 import { WorkspaceDialogService } from '@affine/core/modules/dialogs';
 import { useI18n } from '@affine/i18n';
-import { track } from '@affine/track';
+
 import { AccountIcon, AdminIcon, SignOutIcon } from '@blocksuite/icons/rc';
 import { useLiveData, useService } from '@toeverything/infra';
 import { useCallback, useEffect } from 'react';
@@ -17,7 +17,7 @@ export const AccountMenu = () => {
   const isAFFiNEAdmin = useLiveData(userFeatureService.userFeature.isAdmin$);
 
   const onOpenAccountSetting = useCallback(() => {
-    track.$.navigationPanel.profileAndBadge.openSettings({ to: 'account' });
+    
     workspaceDialogService.open('setting', {
       activeTab: 'account',
     });

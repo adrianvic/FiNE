@@ -14,7 +14,7 @@ import {
   Scroller,
   ScrollSeekPlaceholder,
 } from '@affine/core/modules/pdf/views';
-import track from '@affine/track';
+
 import {
   CollapseIcon,
   ExpandIcon,
@@ -417,7 +417,7 @@ function PDFViewerContainer({
   useEffect(() => {
     if (state.status !== PDFStatus.Error) return;
 
-    track.$.attachment.$.openPDFRendererFail();
+    
   }, [state]);
 
   useEffect(() => {

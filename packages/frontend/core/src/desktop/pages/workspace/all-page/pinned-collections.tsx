@@ -14,7 +14,7 @@ import {
 import type { FilterParams } from '@affine/core/modules/collection-rules';
 import { WorkspaceDialogService } from '@affine/core/modules/dialogs';
 import { useI18n } from '@affine/i18n';
-import track from '@affine/track';
+
 import {
   CloseIcon,
   CollectionsIcon,
@@ -106,9 +106,7 @@ export const PinnedCollections = ({
         onClick={() => {
           // only fire onActiveAll if the collection is not already active
           if (activeCollectionId !== null) {
-            track.allDocs.header.navigation.navigatePinedCollectionRouter({
-              control: 'all',
-            });
+            
             onActiveAll();
           }
         }}
@@ -124,9 +122,7 @@ export const PinnedCollections = ({
           onClick={() => {
             // only fire onActiveCollection if the collection is not already active
             if (activeCollectionId !== record.collectionId) {
-              track.allDocs.header.navigation.navigatePinedCollectionRouter({
-                control: 'user-custom-collection',
-              });
+              
               onActiveCollection(record.collectionId);
             }
           }}
@@ -154,7 +150,7 @@ export const PinnedCollections = ({
             size="16"
             className={styles.editIconButton}
             onClick={() => {
-              track.allDocs.header.collection.editCollection();
+              
               workspaceDialogService.open('collection-editor', {
                 collectionId: activeCollectionId,
               });
@@ -238,7 +234,7 @@ export const AddPinnedCollectionMenuContent = ({
           prefixIcon={<CollectionsIcon />}
           suffixIcon={<PlusIcon />}
           onClick={() => {
-            track.allDocs.header.collection.addPinnedCollection();
+            
             onPinCollection(meta.id);
           }}
         >

@@ -4,7 +4,7 @@ import { getDowngradeQuestionnaireLink } from '@affine/core/components/hooks/aff
 import { useAsyncCallback } from '@affine/core/components/hooks/affine-async-hooks';
 import { SubscriptionPlan } from '@affine/graphql';
 import { useI18n } from '@affine/i18n';
-import { track } from '@affine/track';
+
 import { useLiveData, useService } from '@toeverything/infra';
 import { nanoid } from 'nanoid';
 import type { PropsWithChildren } from 'react';
@@ -43,10 +43,7 @@ export const CancelAction = ({
 
   useEffect(() => {
     if (!open || !proSubscription) return;
-    track.$.settingsPanel.plans.cancelSubscription({
-      plan: proSubscription.plan,
-      recurring: proSubscription.recurring,
-    });
+    
   }, [open, proSubscription]);
 
   const downgrade = useAsyncCallback(async () => {
@@ -61,10 +58,7 @@ export const CancelAction = ({
       onOpenChange(false);
       const proSubscription = subscription.pro$.value;
       if (proSubscription) {
-        track.$.settingsPanel.plans.confirmCancelingSubscription({
-          plan: proSubscription.plan,
-          recurring: proSubscription.recurring,
-        });
+        
       }
       if (account && prevRecurring) {
         downgradeNotify(
@@ -198,10 +192,7 @@ export const ResumeAction = ({
       onOpenChange(false);
       const proSubscription = subscription.pro$.value;
       if (proSubscription) {
-        track.$.settingsPanel.plans.confirmResumingSubscription({
-          plan: proSubscription.plan,
-          recurring: proSubscription.recurring,
-        });
+        
       }
     } finally {
       setIsMutating(false);

@@ -18,7 +18,7 @@ import { DocLinksService } from '@affine/core/modules/doc-link';
 import { GuardService } from '@affine/core/modules/permissions';
 import { WorkspacePropertyService } from '@affine/core/modules/workspace-property';
 import { useI18n } from '@affine/i18n';
-import track from '@affine/track';
+
 import { PlusIcon } from '@blocksuite/icons/rc';
 import { useLiveData, useServices } from '@toeverything/infra';
 import { useCallback, useEffect, useState } from 'react';
@@ -52,26 +52,19 @@ export const InfoTable = ({
 
   const onBacklinkPropertyChange = useCallback(
     (_row: DatabaseRow, cell: DatabaseValueCell, _value: unknown) => {
-      track.$.docInfoPanel.databaseProperty.editProperty({
-        type: cell.property.type$.value,
-      });
+      
     },
     []
   );
 
   const onPropertyAdded = useCallback((property: DocCustomPropertyInfo) => {
     setNewPropertyId(property.id);
-    track.$.docInfoPanel.property.addProperty({
-      type: property.type,
-      control: 'at menu',
-    });
+    
   }, []);
 
   const onPropertyChange = useCallback(
     (property: DocCustomPropertyInfo, _value: unknown) => {
-      track.$.docInfoPanel.property.editProperty({
-        type: property.type,
-      });
+      
     },
     []
   );
@@ -82,10 +75,7 @@ export const InfoTable = ({
       field: keyof DocCustomPropertyInfo,
       _value: string
     ) => {
-      track.$.docInfoPanel.property.editPropertyMeta({
-        type: property.type,
-        field,
-      });
+      
     },
     []
   );

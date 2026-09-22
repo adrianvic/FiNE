@@ -4,7 +4,7 @@ import { useGuard } from '@affine/core/components/guard';
 import { useAsyncCallback } from '@affine/core/components/hooks/affine-async-hooks';
 import { DocService, DocsService } from '@affine/core/modules/doc';
 import { WorkspaceService } from '@affine/core/modules/workspace';
-import { track } from '@affine/track';
+
 import { useLiveData, useService } from '@toeverything/infra';
 import clsx from 'clsx';
 import type { HTMLAttributes } from 'react';
@@ -31,7 +31,7 @@ export const BlocksuiteHeaderTitle = (props: BlockSuiteHeaderTitleProps) => {
   const onChange = useAsyncCallback(
     async (v: string) => {
       await docsService.changeDocTitle(docService.doc.id, v);
-      track.$.header.actions.renameDoc();
+      
     },
     [docService.doc.id, docsService]
   );

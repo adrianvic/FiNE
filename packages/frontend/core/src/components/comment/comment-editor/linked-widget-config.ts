@@ -1,7 +1,7 @@
 import { MemberSearchService } from '@affine/core/modules/permissions';
 import { highlighter } from '@affine/core/modules/quicksearch/utils/highlighter';
 import { I18n } from '@affine/i18n';
-import track from '@affine/track';
+
 import type { AffineInlineEditor } from '@blocksuite/affine/shared/types';
 import type {
   LinkedMenuItem,
@@ -55,9 +55,7 @@ export const createCommentLinkedWidgetConfig = (
 
           close();
 
-          track.doc.editor.atMenu.mentionMember({
-            type: 'member',
-          });
+          
 
           const inlineRange = inlineEditor.getInlineRange();
           if (!inlineRange || inlineRange.length !== 0) return;

@@ -35,7 +35,7 @@ import {
 import { WorkspaceService } from '@affine/core/modules/workspace';
 import { isNewTabTrigger } from '@affine/core/utils';
 import { ServerFeature } from '@affine/graphql';
-import track from '@affine/track';
+
 import { DisposableGroup } from '@blocksuite/affine/global/disposable';
 import { RefNodeSlotsProvider } from '@blocksuite/affine/inlines/reference';
 import { focusBlockEnd } from '@blocksuite/affine/shared/commands';
@@ -233,11 +233,11 @@ const DetailPageImpl = memo(function DetailPageImpl() {
                     : 'open-in-active-view';
 
                 if (openMode === 'open-in-new-view') {
-                  track.doc.editor.toolbar.openInSplitView();
+                  
                 } else if (openMode === 'open-in-center-peek') {
-                  track.doc.editor.toolbar.openInPeekView();
+                  
                 } else if (openMode === 'open-in-new-tab') {
-                  track.doc.editor.toolbar.openInNewTab();
+                  
                 }
 
                 if (openMode !== 'open-in-center-peek') {

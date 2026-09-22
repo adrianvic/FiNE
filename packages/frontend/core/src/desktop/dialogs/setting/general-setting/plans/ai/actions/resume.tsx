@@ -8,7 +8,7 @@ import { useAsyncCallback } from '@affine/core/components/hooks/affine-async-hoo
 import { SubscriptionService } from '@affine/core/modules/cloud';
 import { SubscriptionPlan } from '@affine/graphql';
 import { useI18n } from '@affine/i18n';
-import { track } from '@affine/track';
+
 import { SingleSelectCheckSolidIcon } from '@blocksuite/icons/rc';
 import { useService } from '@toeverything/infra';
 import { cssVar } from '@toeverything/theme';
@@ -27,10 +27,7 @@ export const AIResume = (btnProps: ButtonProps) => {
   const resume = useAsyncCallback(async () => {
     const aiSubscription = subscription.ai$.value;
     if (aiSubscription) {
-      track.$.settingsPanel.plans.resumeSubscription({
-        plan: SubscriptionPlan.AI,
-        recurring: aiSubscription.recurring,
-      });
+      
     }
 
     openConfirmModal({
@@ -51,10 +48,7 @@ export const AIResume = (btnProps: ButtonProps) => {
           SubscriptionPlan.AI
         );
         if (aiSubscription) {
-          track.$.settingsPanel.plans.confirmResumingSubscription({
-            plan: aiSubscription.plan,
-            recurring: aiSubscription.recurring,
-          });
+          
         }
         notify({
           icon: <SingleSelectCheckSolidIcon />,

@@ -14,7 +14,7 @@ import { GlobalDialogService } from '@affine/core/modules/dialogs';
 import type { AudioAttachmentBlock } from '@affine/core/modules/media/entities/audio-attachment-block';
 import { AudioAttachmentService } from '@affine/core/modules/media/services/audio-attachment';
 import { Trans, useI18n } from '@affine/i18n';
-import track from '@affine/track';
+
 import type { AttachmentBlockModel } from '@blocksuite/affine/model';
 import { ResetIcon } from '@blocksuite/icons/rc';
 import { useLiveData, useService } from '@toeverything/infra';
@@ -86,11 +86,7 @@ const AttachmentAudioPlayer = ({ block }: { block: AudioAttachmentBlock }) => {
 
     if (transcribed) {
       block.expanded$.setValue(!expanded);
-      track.doc.editor.audioBlock.openTranscribeNotes({
-        type: 'Meeting record',
-        method: 'success',
-        option: expanded ? 'off' : 'on',
-      });
+      
       return;
     }
 
@@ -107,10 +103,7 @@ const AttachmentAudioPlayer = ({ block }: { block: AudioAttachmentBlock }) => {
           globalDialogService.open('sign-in', {});
         },
       });
-      track.doc.editor.audioBlock.openTranscribeNotes({
-        type: 'Meeting record',
-        method: 'not signed in',
-      });
+      
       return;
     }
 
@@ -133,16 +126,9 @@ const AttachmentAudioPlayer = ({ block }: { block: AudioAttachmentBlock }) => {
           variant: 'primary',
         },
       });
-      track.doc.editor.audioBlock.openTranscribeNotes({
-        type: 'Meeting record',
-        method: 'not owner',
-      });
+      
     } else {
-      track.doc.editor.audioBlock.transcribeRecording({
-        type: 'Meeting record',
-        method: 'success',
-        option: 'handle transcribing',
-      });
+      
     }
   }, [
     enableAi,

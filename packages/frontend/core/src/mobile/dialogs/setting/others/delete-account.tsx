@@ -3,7 +3,7 @@ import { AuthService, ServerService } from '@affine/core/modules/cloud';
 import { WorkspacesService } from '@affine/core/modules/workspace';
 import { UserFriendlyError } from '@affine/error';
 import { Trans, useI18n } from '@affine/i18n';
-import { track } from '@affine/track';
+
 import { LiveData, useLiveData, useService } from '@toeverything/infra';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { combineLatest, map, of, switchMap } from 'rxjs';
@@ -156,7 +156,7 @@ const DeleteAccountModal = ({
     try {
       setIsLoading(true);
       await authService.deleteAccount();
-      track.$.$.auth.deleteAccount();
+      
       onDeleteFinished?.();
     } catch (err) {
       console.error(err);

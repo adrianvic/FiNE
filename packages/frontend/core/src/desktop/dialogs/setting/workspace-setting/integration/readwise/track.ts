@@ -1,9 +1,7 @@
-import track from '@affine/track';
-
 /**
  * Wrap the track function to add default properties to the first argument
  */
-export const readwiseTrack = new Proxy(track.$.settingsPanel.integrationList, {
+export const readwiseTrack = new Proxy(Object, {
   get(target, key, receiver) {
     const original = Reflect.get(target, key, receiver);
 

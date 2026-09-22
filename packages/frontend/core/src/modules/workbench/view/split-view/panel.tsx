@@ -7,7 +7,7 @@ import {
 } from '@affine/component';
 import type { AffineDNDData } from '@affine/core/types/dnd';
 import { useI18n } from '@affine/i18n';
-import track from '@affine/track';
+
 import {
   CloseIcon,
   ExpandFullIcon,
@@ -185,10 +185,7 @@ export const SplitViewPanel = memo(function SplitViewPanel({
         }
         setDraggingView(null);
         setDraggingOverView(null);
-        track.$.splitViewIndicator.$.splitViewAction({
-          control: 'indicator',
-          action: 'move',
-        });
+        
       },
       onDragStart() {
         setDraggingView({
@@ -300,31 +297,19 @@ const SplitViewMenu = ({
 
   const handleClose = useCallback(() => {
     workbench.close(view);
-    track.$.splitViewIndicator.$.splitViewAction({
-      control: 'menu',
-      action: 'close',
-    });
+    
   }, [view, workbench]);
   const handleMoveLeft = useCallback(() => {
     onMove(viewIndex, viewIndex - 1);
-    track.$.splitViewIndicator.$.splitViewAction({
-      control: 'menu',
-      action: 'move',
-    });
+    
   }, [onMove, viewIndex]);
   const handleMoveRight = useCallback(() => {
     onMove(viewIndex, viewIndex + 1);
-    track.$.splitViewIndicator.$.splitViewAction({
-      control: 'menu',
-      action: 'move',
-    });
+    
   }, [onMove, viewIndex]);
   const handleCloseOthers = useCallback(() => {
     workbench.closeOthers(view);
-    track.$.splitViewIndicator.$.splitViewAction({
-      control: 'menu',
-      action: 'closeOthers',
-    });
+    
   }, [view, workbench]);
 
   const CloseItem =

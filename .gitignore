@@ -101,3 +101,8 @@ storageState.json
 /.playwright-browsers/
 **/.vitest-attachments/
 /blocksuite/framework/std/src/__tests__/gfx/__screenshots__/
+
+/.docker/selfhost/data
+/.docker/selfhost/config
+/.docker/dev/data
+/.docker/dev/config

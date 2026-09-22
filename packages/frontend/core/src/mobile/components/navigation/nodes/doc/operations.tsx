@@ -17,7 +17,7 @@ import { WorkbenchService } from '@affine/core/modules/workbench';
 import { WorkspaceService } from '@affine/core/modules/workspace';
 import { preventDefault } from '@affine/core/utils';
 import { useI18n } from '@affine/i18n';
-import { track } from '@affine/track';
+
 import {
   DeleteIcon,
   DuplicateIcon,
@@ -46,8 +46,8 @@ export const useNavigationPanelDocNodeAddLinkedPage = (
   return useAsyncCallback(async () => {
     const newDoc = createPage();
     await docsService.addLinkedDoc(docId, newDoc.id);
-    track.$.navigationPanel.docs.createDoc({ control: 'linkDoc' });
-    track.$.navigationPanel.docs.linkDoc({ control: 'createDoc' });
+    
+    
     openNodeCollapsed();
   }, [createPage, docId, docsService, openNodeCollapsed]);
 };
@@ -74,7 +74,7 @@ export const useNavigationPanelDocNodeOperations = (docId: string) => {
   const { duplicate } = useBlockSuiteMetaHelper();
   const handleDuplicate = useCallback(() => {
     duplicate(docId, true);
-    track.$.navigationPanel.docs.createDoc();
+    
   }, [docId, duplicate]);
 
   const handleMoveToTrash = useCallback(() => {
@@ -93,9 +93,7 @@ export const useNavigationPanelDocNodeOperations = (docId: string) => {
       },
       async onConfirm() {
         await docRecord.moveToTrash();
-        track.$.navigationPanel.docs.deleteDoc({
-          control: 'button',
-        });
+        
         toast(t['com.affine.toastMessage.movedTrash']());
       },
     });
@@ -105,31 +103,25 @@ export const useNavigationPanelDocNodeOperations = (docId: string) => {
     workbenchService.workbench.openDoc(docId, {
       at: 'new-tab',
     });
-    track.$.navigationPanel.organize.openInNewTab({
-      type: 'doc',
-    });
+    
   }, [docId, workbenchService]);
 
   const handleOpenInSplitView = useCallback(() => {
     workbenchService.workbench.openDoc(docId, {
       at: 'beside',
     });
-    track.$.navigationPanel.organize.openInSplitView({
-      type: 'doc',
-    });
+    
   }, [docId, workbenchService.workbench]);
 
   const handleToggleFavoriteDoc = useCallback(() => {
     compatibleFavoriteItemsAdapter.toggle(docId, 'doc');
-    track.$.navigationPanel.organize.toggleFavorite({
-      type: 'doc',
-    });
+    
   }, [docId, compatibleFavoriteItemsAdapter]);
 
   const handleRename = useAsyncCallback(
     async (newName: string) => {
       await docsService.changeDocTitle(docId, newName);
-      track.$.navigationPanel.organize.renameOrganizeItem({ type: 'doc' });
+      
     },
     [docId, docsService]
   );

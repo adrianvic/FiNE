@@ -2,7 +2,7 @@ import { Checkbox, notify, useDndMonitor } from '@affine/component';
 import { useAppSettingHelper } from '@affine/core/components/hooks/affine/use-app-setting-helper';
 import type { AffineDNDData } from '@affine/core/types/dnd';
 import { useI18n } from '@affine/i18n';
-import track from '@affine/track';
+
 import { useService } from '@toeverything/infra';
 import clsx from 'clsx';
 import { useSetAtom } from 'jotai';
@@ -199,10 +199,7 @@ export const SplitView = ({
 
           if (to) {
             workbench.createView(at, to);
-            track.$.splitViewIndicator.$.openInSplitView({
-              type: entity?.type,
-              route: to,
-            });
+            
           }
         }
       },

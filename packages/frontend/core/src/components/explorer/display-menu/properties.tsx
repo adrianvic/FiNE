@@ -1,7 +1,7 @@
 import { Button, Divider } from '@affine/component';
 import { WorkspacePropertyService } from '@affine/core/modules/workspace-property';
 import { useI18n } from '@affine/i18n';
-import track from '@affine/track';
+
 import { useLiveData, useService } from '@toeverything/infra';
 import { useCallback, useMemo } from 'react';
 
@@ -166,10 +166,7 @@ const PropertyRenderer = ({
       key={key}
       data-show={isActive}
       onClick={() => {
-        track.allDocs.header.displayMenu.editDisplayMenu({
-          control: 'displayProperties',
-          type: systemProperty?.type ?? 'custom-property',
-        });
+        
         handlePropertyClick(key);
       }}
       className={styles.property}

@@ -1,6 +1,6 @@
 import { UserFriendlyError } from '@affine/error';
 import { type OAuthProviderType, ServerDeploymentType } from '@affine/graphql';
-import { track } from '@affine/track';
+
 import { OnEvent, Service } from '@toeverything/infra';
 import { nanoid } from 'nanoid';
 import { distinctUntilChanged, map, skip, type Subscription } from 'rxjs';
@@ -123,7 +123,7 @@ export class AuthService extends Service {
     redirectUrl?: string // url to redirect to after signed-in
   ) {
     this.assertSupportedServerVersion();
-    track.$.$.auth.signIn({ method: 'magic-link' });
+    
     // Only native clients use `client_nonce` for magic-link/otp sign-in.
     // Web needs to keep cross-device magic-link compatibility.
     const magicLinkClientNonce = BUILD_CONFIG.isNative
@@ -153,10 +153,7 @@ export class AuthService extends Service {
         },
       });
     } catch (e) {
-      track.$.$.auth.signInFail({
-        method: 'magic-link',
-        reason: UserFriendlyError.fromAny(e).name,
-      });
+      
       throw e;
     }
   }
@@ -167,12 +164,9 @@ export class AuthService extends Service {
       await this.store.signInMagicLink(email, token);
 
       await this.session.revalidateOnce();
-      track.$.$.auth.signedIn({ method });
+      
     } catch (e) {
-      track.$.$.auth.signInFail({
-        method,
-        reason: UserFriendlyError.fromAny(e).name,
-      });
+      
       throw e;
     }
   }
@@ -201,11 +195,7 @@ export class AuthService extends Service {
 
       return await res.json();
     } catch (e) {
-      track.$.$.auth.signInFail({
-        method: 'oauth',
-        provider,
-        reason: UserFriendlyError.fromAny(e).name,
-      });
+      
       throw e;
     }
   }
@@ -220,14 +210,10 @@ export class AuthService extends Service {
 
       await this.session.revalidateOnce();
 
-      track.$.$.auth.signedIn({ method: 'oauth', provider });
+      
       return { redirectUri };
     } catch (e) {
-      track.$.$.auth.signInFail({
-        method: 'oauth',
-        provider,
-        reason: UserFriendlyError.fromAny(e).name,
-      });
+      
       throw e;
     }
   }
@@ -261,7 +247,7 @@ export class AuthService extends Service {
     challenge?: string;
   }) {
     this.assertSupportedServerVersion();
-    track.$.$.auth.signIn({ method: 'password' });
+    
     try {
       const user = await this.store.signInPassword(credential);
       if (user) {
@@ -270,12 +256,9 @@ export class AuthService extends Service {
       } else {
         await this.session.revalidateOnce();
       }
-      track.$.$.auth.signedIn({ method: 'password' });
+      
     } catch (e) {
-      track.$.$.auth.signInFail({
-        method: 'password',
-        reason: UserFriendlyError.fromAny(e).name,
-      });
+      
       throw e;
     }
   }

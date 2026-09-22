@@ -14,7 +14,7 @@ import { WorkspaceService } from '@affine/core/modules/workspace';
 import type { AffineDNDData } from '@affine/core/types/dnd';
 import { inferOpenMode } from '@affine/core/utils';
 import { useI18n } from '@affine/i18n';
-import { track } from '@affine/track';
+
 import { PlusIcon } from '@blocksuite/icons/rc';
 import { useLiveData, useServices } from '@toeverything/infra';
 import { type MouseEventHandler, useCallback, useMemo } from 'react';
@@ -64,13 +64,8 @@ export const NavigationPanelFavorites = () => {
           data.source.data.entity.id,
           favoriteService.favoriteList.indexAt('before')
         );
-        track.$.navigationPanel.organize.toggleFavorite({
-          type: data.source.data.entity.type,
-          on: true,
-        });
-        track.$.navigationPanel.favorites.drop({
-          type: data.source.data.entity.type,
-        });
+        
+        
         navigationPanelService.setCollapsed(path, false);
       }
     },
@@ -115,9 +110,7 @@ export const NavigationPanelFavorites = () => {
               favorite
             )
           );
-          track.$.navigationPanel.organize.orderOrganizeItem({
-            type: data.source.data.entity.type,
-          });
+          
         } else if (
           data.source.data.entity?.type &&
           isFavoriteSupportType(data.source.data.entity.type)
@@ -132,13 +125,8 @@ export const NavigationPanelFavorites = () => {
               favorite
             )
           );
-          track.$.navigationPanel.organize.toggleFavorite({
-            type: data.source.data.entity.type,
-            on: true,
-          });
-          track.$.navigationPanel.favorites.drop({
-            type: data.source.data.entity.type,
-          });
+          
+          
         } else {
           return; // not supported
         }

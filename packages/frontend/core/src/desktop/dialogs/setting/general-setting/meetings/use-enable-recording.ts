@@ -2,7 +2,7 @@ import { useConfirmModal } from '@affine/component';
 import { useAsyncCallback } from '@affine/core/components/hooks/affine-async-hooks';
 import { MeetingSettingsService } from '@affine/core/modules/media/services/meeting-settings';
 import { useI18n } from '@affine/i18n';
-import track from '@affine/track';
+
 import { useService } from '@toeverything/infra';
 
 export const useEnableRecording = () => {
@@ -13,10 +13,7 @@ export const useEnableRecording = () => {
   const handleEnabledChange = useAsyncCallback(
     async (checked: boolean) => {
       try {
-        track.$.settingsPanel.meetings.toggleMeetingFeatureFlag({
-          option: checked ? 'on' : 'off',
-          type: 'Meeting record',
-        });
+        
         await meetingSettingsService.setEnabled(checked);
       } catch {
         confirmModal.openConfirmModal({

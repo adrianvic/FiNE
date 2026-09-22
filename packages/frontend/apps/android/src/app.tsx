@@ -36,7 +36,7 @@ import { getWorkerUrl } from '@affine/env/worker';
 import { I18n } from '@affine/i18n';
 import { serveAuthRequests } from '@affine/mobile-shared/auth/channel';
 import { StoreManagerClient } from '@affine/nbstore/worker/client';
-import { setTelemetryTransport } from '@affine/track';
+
 import { Container } from '@blocksuite/affine/global/di';
 import {
   docLinkBaseURLMiddleware,
@@ -74,7 +74,7 @@ import {
 } from './proxy';
 
 const storeManagerClient = createStoreManagerClient();
-setTelemetryTransport(storeManagerClient.telemetry);
+
 window.addEventListener('beforeunload', () => {
   storeManagerClient.dispose();
 });

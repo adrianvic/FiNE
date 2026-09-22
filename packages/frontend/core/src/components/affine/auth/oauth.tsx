@@ -5,7 +5,7 @@ import { AuthService, ServerService } from '@affine/core/modules/cloud';
 import { UrlService } from '@affine/core/modules/url';
 import { UserFriendlyError } from '@affine/error';
 import { OAuthProviderType } from '@affine/graphql';
-import track from '@affine/track';
+
 import {
   AppleIcon,
   GithubIcon,
@@ -49,7 +49,7 @@ export function OAuth({ redirectUrl }: { redirectUrl?: string }) {
 
   const onContinue = useAsyncCallback(
     async (provider: OAuthProviderType) => {
-      track.$.$.auth.signIn({ method: 'oauth', provider });
+      
 
       const open: () => Promise<void> | void = BUILD_CONFIG.isNative
         ? async () => {

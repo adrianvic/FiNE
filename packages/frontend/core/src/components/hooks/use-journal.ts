@@ -7,7 +7,7 @@ import {
 } from '@affine/core/modules/journal';
 import type { WorkbenchOpenOptions } from '@affine/core/modules/workbench/entities/workbench';
 import { i18nTime } from '@affine/i18n';
-import { track } from '@affine/track';
+
 import { useService, useServices } from '@toeverything/infra';
 import dayjs from 'dayjs';
 import { useCallback, useMemo } from 'react';
@@ -64,9 +64,7 @@ export const useJournalRouteHelper = () => {
     (maybeDate: MaybeDate, options?: WorkbenchOpenOptions) => {
       const page = getJournalByDate(maybeDate);
       workbench.openDoc(page.id, options);
-      track.$.navigationPanel.journal.navigate({
-        to: 'journal',
-      });
+      
       return page.id;
     },
     [getJournalByDate, workbench]

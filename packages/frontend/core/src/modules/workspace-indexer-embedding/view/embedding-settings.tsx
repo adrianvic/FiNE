@@ -10,7 +10,7 @@ import { WorkspaceDialogService } from '@affine/core/modules/dialogs';
 import { UserFriendlyError } from '@affine/error';
 import { ServerFeature } from '@affine/graphql';
 import { useI18n } from '@affine/i18n';
-import track from '@affine/track';
+
 import { useLiveData, useService } from '@toeverything/infra';
 import type React from 'react';
 import { useCallback, useEffect } from 'react';
@@ -56,11 +56,7 @@ const EmbeddingCloud: React.FC<{ disabled: boolean }> = ({ disabled }) => {
 
   const handleEmbeddingToggle = useCallback(
     (checked: boolean) => {
-      track.$.settingsPanel.indexerEmbedding.toggleWorkspaceEmbedding({
-        type: 'Embedding',
-        control: 'Workspace embedding',
-        option: checked ? 'on' : 'off',
-      });
+      
 
       embeddingService.embeddingEnabled
         .setEnabled(checked)
@@ -85,11 +81,7 @@ const EmbeddingCloud: React.FC<{ disabled: boolean }> = ({ disabled }) => {
 
   const handleAttachmentUpload = useCallback(
     (file: File) => {
-      track.$.settingsPanel.indexerEmbedding.addAdditionalDocs({
-        type: 'Embedding',
-        control: 'Select doc',
-        docType: file.type,
-      });
+      
       embeddingService.additionalAttachments.addAttachments([file]);
       embeddingService.embeddingProgress.startEmbeddingProgress();
     },
@@ -137,11 +129,7 @@ const EmbeddingCloud: React.FC<{ disabled: boolean }> = ({ disabled }) => {
         if (selectedIds === undefined) {
           return;
         }
-        track.$.settingsPanel.indexerEmbedding.addIgnoredDocs({
-          type: 'Embedding',
-          control: 'Additional docs',
-          result: 'success',
-        });
+        
         const add = selectedIds.filter(id => !initialIds?.includes(id));
         const remove = initialIds?.filter(id => !selectedIds.includes(id));
         embeddingService.ignoredDocs

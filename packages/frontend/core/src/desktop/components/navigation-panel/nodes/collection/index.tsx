@@ -14,7 +14,7 @@ import { GlobalContextService } from '@affine/core/modules/global-context';
 import { NavigationPanelService } from '@affine/core/modules/navigation-panel';
 import type { AffineDNDData } from '@affine/core/types/dnd';
 import { useI18n } from '@affine/i18n';
-import { track } from '@affine/track';
+
 import { FilterMinusIcon } from '@blocksuite/icons/rc';
 import { useLiveData, useService, useServices } from '@toeverything/infra';
 import { useCallback, useEffect, useMemo, useState } from 'react';
@@ -99,9 +99,7 @@ export const NavigationPanelCollectionNode = ({
           name,
         });
 
-        track.$.navigationPanel.organize.renameOrganizeItem({
-          type: 'collection',
-        });
+        
         toast(t['com.affine.toastMessage.rename']());
       }
     },
@@ -127,14 +125,8 @@ export const NavigationPanelCollectionNode = ({
       if (collection && data.treeInstruction?.type === 'make-child') {
         if (data.source.data.entity?.type === 'doc') {
           handleAddDocToCollection(data.source.data.entity.id);
-          track.$.navigationPanel.organize.createOrganizeItem({
-            type: 'link',
-            target: 'doc',
-            control: 'drag',
-          });
-          track.$.navigationPanel.collections.drop({
-            type: data.source.data.entity.type,
-          });
+          
+          
         }
       } else {
         onDrop?.(data);
@@ -162,10 +154,7 @@ export const NavigationPanelCollectionNode = ({
     (data: DropTargetDropEvent<AffineDNDData>) => {
       if (collection && data.source.data.entity?.type === 'doc') {
         handleAddDocToCollection(data.source.data.entity.id);
-        track.$.navigationPanel.organize.createOrganizeItem({
-          type: 'collection',
-          control: 'drag',
-        });
+        
       }
     },
     [collection, handleAddDocToCollection]
@@ -260,7 +249,7 @@ const NavigationPanelCollectionNodeChildren = ({
 
   const handleRemoveFromAllowList = useCallback(
     (id: string) => {
-      track.$.navigationPanel.collections.removeOrganizeItem({ type: 'doc' });
+      
       collectionService.removeDocFromCollection(collection.id, id);
       toast(t['com.affine.collection.removePage.success']());
     },

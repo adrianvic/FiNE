@@ -23,7 +23,7 @@ import { GlobalSessionStateService } from '@affine/core/modules/storage';
 import { WorkbenchLink } from '@affine/core/modules/workbench';
 import { WorkspaceService } from '@affine/core/modules/workspace';
 import { useI18n } from '@affine/i18n';
-import track from '@affine/track';
+
 import type {
   ExtensionType,
   TransformerMiddleware,
@@ -113,9 +113,7 @@ const CollapsibleSection = ({
 
   const handleToggle = useCallback(() => {
     setOpen(!open);
-    track.doc.biDirectionalLinksPanel.$.toggle({
-      type: open ? 'collapse' : 'expand',
-    });
+    
   }, [open, setOpen]);
 
   return (
@@ -254,7 +252,7 @@ export const BacklinkGroups = () => {
               <AffinePageReference
                 pageId={linkGroup.docId}
                 onClick={() => {
-                  track.doc.biDirectionalLinksPanel.backlinkTitle.navigate();
+                  
                 }}
               />
             }
@@ -381,7 +379,7 @@ export const LinkPreview = ({
             key={link.blockId}
             className={styles.linkPreview}
             onClick={() => {
-              track.doc.biDirectionalLinksPanel.backlinkPreview.navigate();
+              
             }}
           >
             {edgelessLink ? (
@@ -425,9 +423,7 @@ export const BiDirectionalLinkPanel = () => {
 
   const handleClickShow = useCallback(() => {
     setShow(!show);
-    track.doc.biDirectionalLinksPanel.$.toggle({
-      type: show ? 'collapse' : 'expand',
-    });
+    
   }, [show, setShow]);
 
   return (

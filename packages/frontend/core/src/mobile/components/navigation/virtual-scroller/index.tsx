@@ -10,7 +10,7 @@ import { TagService } from '@affine/core/modules/tag';
 import { WorkbenchService } from '@affine/core/modules/workbench';
 import { WorkspaceService } from '@affine/core/modules/workspace';
 import { useI18n } from '@affine/i18n';
-import { track } from '@affine/track';
+
 import {
   AddCollectionIcon,
   AddOrganizeIcon,
@@ -357,11 +357,8 @@ const useFolderNewDoc = (folderId: string, onCreated?: () => void) => {
     if (!folder) return;
     const doc = createPage();
     folder.createLink('doc', doc.id, folder.indexAt('before'));
-    track.$.navigationPanel.folders.createDoc();
-    track.$.navigationPanel.organize.createOrganizeItem({
-      type: 'link',
-      target: 'doc',
-    });
+    
+    
     onCreated?.();
   }, [createPage, folderId, onCreated, organizeService.folderTree]);
 };
@@ -609,7 +606,7 @@ const OrganizeAction = () => {
   const handleCreate = useCallback(
     (name: string) => {
       const id = root.createFolder(name, root.indexAt('before'));
-      track.$.navigationPanel.organize.createOrganizeItem({ type: 'folder' });
+      
       return id;
     },
     [root]

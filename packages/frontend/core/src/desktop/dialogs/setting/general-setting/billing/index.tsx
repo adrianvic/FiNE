@@ -5,7 +5,7 @@ import {
 } from '@affine/component/setting-components';
 import { SubscriptionService } from '@affine/core/modules/cloud';
 import { useI18n } from '@affine/i18n';
-import { track } from '@affine/track';
+
 import { useLiveData, useService } from '@toeverything/infra';
 import { useCallback, useEffect } from 'react';
 
@@ -59,7 +59,7 @@ const SubscriptionSettings = ({
 
   const openPlans = useCallback(
     (scrollAnchor?: string) => {
-      track.$.settingsPanel.billing.viewPlans();
+      
       onChangeSettingState({
         activeTab: 'plans',
         scrollAnchor: scrollAnchor,

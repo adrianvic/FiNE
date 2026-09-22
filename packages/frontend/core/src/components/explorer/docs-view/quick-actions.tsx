@@ -11,7 +11,7 @@ import { GuardService } from '@affine/core/modules/permissions';
 import { WorkbenchService } from '@affine/core/modules/workbench';
 import { UserFriendlyError } from '@affine/error';
 import { useI18n } from '@affine/i18n';
-import track from '@affine/track';
+
 import {
   DeleteIcon,
   OpenInNewIcon,
@@ -45,7 +45,7 @@ export const QuickFavorite = memo(function QuickFavorite({
       onClick?.(e);
       e.stopPropagation();
       e.preventDefault();
-      track.allDocs.list.docMenu.toggleFavorite();
+      
       favAdapter.toggle(doc.id, 'doc');
     },
     [doc.id, favAdapter, onClick]
@@ -78,8 +78,8 @@ export const QuickTab = memo(function QuickTab({
       onClick?.(e);
       e.stopPropagation();
       e.preventDefault();
-      track.allDocs.list.doc.openDoc();
-      track.allDocs.list.docMenu.openInNewTab();
+      
+      
       workbench.openDoc(doc.id, { at: 'new-tab' });
     },
     [doc.id, onClick, workbench]
@@ -112,8 +112,8 @@ export const QuickSplit = memo(function QuickSplit({
       onClick?.(e);
       e.stopPropagation();
       e.preventDefault();
-      track.allDocs.list.doc.openDoc();
-      track.allDocs.list.docMenu.openInSplitView();
+      
+      
       workbench.openDoc(doc.id, { at: 'tail' });
     },
     [doc.id, onClick, workbench]
@@ -152,7 +152,7 @@ export const QuickDelete = memo(function QuickDelete({
         return;
       }
 
-      track.allDocs.list.docMenu.deleteDoc();
+      
       openConfirmModal({
         title: t['com.affine.moveToTrash.confirmModal.title'](),
         description: t['com.affine.moveToTrash.confirmModal.description']({

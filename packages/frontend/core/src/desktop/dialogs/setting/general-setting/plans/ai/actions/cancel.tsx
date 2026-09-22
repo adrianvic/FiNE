@@ -5,7 +5,7 @@ import { useAsyncCallback } from '@affine/core/components/hooks/affine-async-hoo
 import { AuthService, SubscriptionService } from '@affine/core/modules/cloud';
 import { SubscriptionPlan } from '@affine/graphql';
 import { useI18n } from '@affine/i18n';
-import { track } from '@affine/track';
+
 import { useService } from '@toeverything/infra';
 import { nanoid } from 'nanoid';
 import { useState } from 'react';
@@ -23,10 +23,7 @@ export const AICancel = (btnProps: ButtonProps) => {
   const cancel = useAsyncCallback(async () => {
     const aiSubscription = subscription.ai$.value;
     if (aiSubscription) {
-      track.$.settingsPanel.plans.cancelSubscription({
-        plan: SubscriptionPlan.AI,
-        recurring: aiSubscription.recurring,
-      });
+      
     }
     openConfirmModal({
       title: t['com.affine.payment.ai.action.cancel.confirm.title'](),
@@ -51,10 +48,7 @@ export const AICancel = (btnProps: ButtonProps) => {
             SubscriptionPlan.AI
           );
           setIdempotencyKey(nanoid());
-          track.$.settingsPanel.plans.confirmCancelingSubscription({
-            plan: SubscriptionPlan.AI,
-            recurring: aiSubscription?.recurring,
-          });
+          
           const account = authService.session.account$.value;
           const prevRecurring = subscription.ai$.value?.recurring;
           if (account && prevRecurring) {

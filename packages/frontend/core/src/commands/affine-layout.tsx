@@ -1,5 +1,5 @@
 import type { useI18n } from '@affine/i18n';
-import { track } from '@affine/track';
+
 import { SidebarIcon } from '@blocksuite/icons/rc';
 
 import type { AppSidebarService } from '../modules/app-sidebar';
@@ -27,9 +27,7 @@ export function registerAffineLayoutCommands({
         binding: '$mod+/',
       },
       run() {
-        track.$.navigationPanel.$.toggle({
-          type: appSidebarService.sidebar.open$.value ? 'collapse' : 'expand',
-        });
+        
         appSidebarService.sidebar.toggleSidebar();
       },
     })

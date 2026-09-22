@@ -1,5 +1,5 @@
 import { WorkspaceDialogService } from '@affine/core/modules/dialogs';
-import track from '@affine/track';
+
 import type { Container } from '@blocksuite/affine/global/di';
 import {
   FileSizeLimitProvider,
@@ -23,7 +23,7 @@ export function patchFileSizeLimitExtension(framework: FrameworkProvider) {
         activeTab: 'plans',
         scrollAnchor: 'cloudPricingPlan',
       });
-      track.$.paywall.storage.viewPlans();
+      
     }
 
     static override setup(di: Container) {

@@ -6,7 +6,7 @@ import {
 } from '@affine/core/modules/workspace-property';
 import { generateUniqueNameInSequence } from '@affine/core/utils/unique-name';
 import { useI18n } from '@affine/i18n';
-import track from '@affine/track';
+
 import { PlusIcon } from '@blocksuite/icons/rc';
 import {
   Content as CollapsibleContent,
@@ -55,20 +55,14 @@ export const WorkspacePropertySidebar = () => {
         isDeleted: false,
       });
       setNewPropertyId(newProperty.id);
-      track.doc.sidepanel.property.addProperty({
-        control: 'property list',
-        type: option.type,
-      });
+      
     },
     [workspacePropertyService, properties]
   );
 
   const onPropertyInfoChange = useCallback(
     (property: DocCustomPropertyInfo, field: string) => {
-      track.doc.sidepanel.property.editPropertyMeta({
-        type: property.type,
-        field,
-      });
+      
     },
     []
   );

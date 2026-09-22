@@ -13,7 +13,7 @@ import { CompatibleFavoriteItemsAdapter } from '@affine/core/modules/favorite';
 import { WorkbenchService } from '@affine/core/modules/workbench';
 import { WorkspaceService } from '@affine/core/modules/workspace';
 import { useI18n } from '@affine/i18n';
-import { track } from '@affine/track';
+
 import {
   DeleteIcon,
   FilterIcon,
@@ -43,10 +43,8 @@ export const useNavigationPanelCollectionAddDoc = (
   const createAndAddDocument = useCallback(() => {
     const newDoc = createPage();
     collectionService.addDocToCollection(collectionId, newDoc.id);
-    track.$.navigationPanel.collections.createDoc();
-    track.$.navigationPanel.collections.addDocToCollection({
-      control: 'button',
-    });
+    
+    
     onOpenCollapsed();
   }, [collectionId, collectionService, createPage, onOpenCollapsed]);
   return useCallback(() => {
@@ -86,28 +84,22 @@ export const useNavigationPanelCollectionNodeOperations = (
   );
   const handleToggleFavoriteCollection = useCallback(() => {
     compatibleFavoriteItemsAdapter.toggle(collectionId, 'collection');
-    track.$.navigationPanel.organize.toggleFavorite({
-      type: 'collection',
-    });
+    
   }, [compatibleFavoriteItemsAdapter, collectionId]);
 
   const handleOpenInSplitView = useCallback(() => {
     workbenchService.workbench.openCollection(collectionId, { at: 'beside' });
-    track.$.navigationPanel.organize.openInSplitView({
-      type: 'collection',
-    });
+    
   }, [collectionId, workbenchService.workbench]);
 
   const handleOpenInNewTab = useCallback(() => {
     workbenchService.workbench.openCollection(collectionId, { at: 'new-tab' });
-    track.$.navigationPanel.organize.openInNewTab({ type: 'collection' });
+    
   }, [collectionId, workbenchService.workbench]);
 
   const handleDeleteCollection = useCallback(() => {
     collectionService.deleteCollection(collectionId);
-    track.$.navigationPanel.organize.deleteOrganizeItem({
-      type: 'collection',
-    });
+    
   }, [collectionId, collectionService]);
 
   const handleShowEdit = useCallback(() => {
@@ -122,9 +114,7 @@ export const useNavigationPanelCollectionNodeOperations = (
           name,
         });
 
-        track.$.navigationPanel.organize.renameOrganizeItem({
-          type: 'collection',
-        });
+        
         notify.success({ message: t['com.affine.toastMessage.rename']() });
       }
     },

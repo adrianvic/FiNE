@@ -7,7 +7,7 @@ import {
 } from '@affine/core/modules/cloud';
 import { SubscriptionPlan } from '@affine/graphql';
 import { useI18n } from '@affine/i18n';
-import { track } from '@affine/track';
+
 import { useLiveData, useService } from '@toeverything/infra';
 import { cssVar } from '@toeverything/theme';
 import { useCallback, useEffect } from 'react';
@@ -50,7 +50,7 @@ export const AIUsagePanel = ({
     onChangeSettingState?.({
       activeTab: 'billing',
     });
-    track.$.settingsPanel.accountUsage.viewPlans({ plan: SubscriptionPlan.AI });
+    
   }, [onChangeSettingState]);
 
   if (loading) {

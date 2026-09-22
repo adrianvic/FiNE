@@ -17,7 +17,7 @@ import { GuardService } from '@affine/core/modules/permissions';
 import { WorkbenchService } from '@affine/core/modules/workbench';
 import { WorkspaceService } from '@affine/core/modules/workspace';
 import { useI18n } from '@affine/i18n';
-import { track } from '@affine/track';
+
 import {
   DeleteIcon,
   DuplicateIcon,
@@ -72,10 +72,10 @@ export const useNavigationPanelDocNodeOperations = (
   const { duplicate } = useBlockSuiteMetaHelper();
   const handleDuplicate = useCallback(() => {
     duplicate(docId, true);
-    track.$.navigationPanel.docs.createDoc();
+    
   }, [docId, duplicate]);
   const handleOpenInfoModal = useCallback(() => {
-    track.$.docInfoPanel.$.open();
+    
     options.openInfoModal();
   }, [options]);
 
@@ -95,9 +95,7 @@ export const useNavigationPanelDocNodeOperations = (
       },
       async onConfirm() {
         await docRecord.moveToTrash();
-        track.$.navigationPanel.docs.deleteDoc({
-          control: 'button',
-        });
+        
         toast(t['com.affine.toastMessage.movedTrash']());
       },
     });
@@ -107,20 +105,16 @@ export const useNavigationPanelDocNodeOperations = (
     workbenchService.workbench.openDoc(docId, {
       at: 'new-tab',
     });
-    track.$.navigationPanel.docs.openDoc();
-    track.$.navigationPanel.organize.openInNewTab({
-      type: 'doc',
-    });
+    
+    
   }, [docId, workbenchService]);
 
   const handleOpenInSplitView = useCallback(() => {
     workbenchService.workbench.openDoc(docId, {
       at: 'beside',
     });
-    track.$.navigationPanel.docs.openDoc();
-    track.$.navigationPanel.organize.openInSplitView({
-      type: 'doc',
-    });
+    
+    
   }, [docId, workbenchService.workbench]);
 
   const handleAddLinkedPage = useAsyncCallback(async () => {
@@ -134,8 +128,8 @@ export const useNavigationPanelDocNodeOperations = (
       const newDoc = createPage();
       // TODO: handle timeout & error
       await docsService.addLinkedDoc(docId, newDoc.id);
-      track.$.navigationPanel.docs.createDoc({ control: 'linkDoc' });
-      track.$.navigationPanel.docs.linkDoc({ control: 'createDoc' });
+      
+      
       options.openNodeCollapsed();
     } finally {
       setAddLinkedPageLoading(false);
@@ -144,9 +138,7 @@ export const useNavigationPanelDocNodeOperations = (
 
   const handleToggleFavoriteDoc = useCallback(() => {
     compatibleFavoriteItemsAdapter.toggle(docId, 'doc');
-    track.$.navigationPanel.organize.toggleFavorite({
-      type: 'doc',
-    });
+    
   }, [docId, compatibleFavoriteItemsAdapter]);
 
   return useMemo(

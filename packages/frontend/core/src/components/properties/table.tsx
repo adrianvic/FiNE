@@ -20,7 +20,7 @@ import { ViewService, WorkbenchService } from '@affine/core/modules/workbench';
 import { WorkspacePropertyService } from '@affine/core/modules/workspace-property';
 import type { AffineDNDData } from '@affine/core/types/dnd';
 import { useI18n } from '@affine/i18n';
-import { track } from '@affine/track';
+
 import { PlusIcon, PropertyIcon, ToggleDownIcon } from '@blocksuite/icons/rc';
 import * as Collapsible from '@radix-ui/react-collapsible';
 import {
@@ -87,7 +87,7 @@ export const WorkspacePropertiesTableHeader = ({
   onOpenChange,
 }: WorkspacePropertiesTableHeaderProps) => {
   const handleCollapse = useCallback(() => {
-    track.doc.inlineDocInfo.$.toggle();
+    
     onOpenChange(!open);
   }, [onOpenChange, open]);
   const t = useI18n();

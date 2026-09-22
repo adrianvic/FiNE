@@ -9,7 +9,7 @@ import { GlobalContextService } from '@affine/core/modules/global-context';
 import { NavigationPanelService } from '@affine/core/modules/navigation-panel';
 import { ShareDocsListService } from '@affine/core/modules/share-doc';
 import { useI18n } from '@affine/i18n';
-import track from '@affine/track';
+
 import { FilterMinusIcon, ViewLayersIcon } from '@blocksuite/icons/rc';
 import { useLiveData, useService, useServices } from '@toeverything/infra';
 import { useCallback, useEffect, useMemo, useState } from 'react';
@@ -141,7 +141,7 @@ const NavigationPanelCollectionNodeChildren = ({
 
   const handleRemoveFromAllowList = useCallback(
     (id: string) => {
-      track.$.navigationPanel.collections.removeOrganizeItem({ type: 'doc' });
+      
       collectionService.removeDocFromCollection(collection.id, id);
       notify.success({
         message: t['com.affine.collection.removePage.success'](),

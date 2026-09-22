@@ -6,7 +6,7 @@ import { DesktopApiService } from '@affine/core/modules/desktop-api';
 import type { Workspace } from '@affine/core/modules/workspace';
 import { useI18n } from '@affine/i18n';
 import { universalId } from '@affine/nbstore';
-import track from '@affine/track';
+
 import { ExportIcon } from '@blocksuite/icons/rc';
 import { useService } from '@toeverything/infra';
 import { useState } from 'react';
@@ -38,9 +38,7 @@ export const DesktopExportPanel = ({ workspace }: ExportPanelProps) => {
     }
     setSaving(true);
     try {
-      track.$.settingsPanel.workspace.export({
-        type: 'workspace',
-      });
+      
 
       const result = await desktopApi.handler?.dialog.saveDBFileAs(
         universalId({

@@ -3,7 +3,7 @@ import { CollectionService } from '@affine/core/modules/collection';
 import { NavigationPanelService } from '@affine/core/modules/navigation-panel';
 import { WorkbenchService } from '@affine/core/modules/workbench';
 import { useI18n } from '@affine/i18n';
-import { track } from '@affine/track';
+
 import { AddCollectionIcon } from '@blocksuite/icons/rc';
 import { useLiveData, useServices } from '@toeverything/infra';
 import { useCallback, useMemo, useState } from 'react';
@@ -29,9 +29,7 @@ export const NavigationPanelCollections = () => {
   const handleCreateCollection = useCallback(
     (name: string) => {
       const id = collectionService.createCollection({ name });
-      track.$.navigationPanel.organize.createOrganizeItem({
-        type: 'collection',
-      });
+      
       workbenchService.workbench.openCollection(id);
       navigationPanelService.setCollapsed(path, false);
     },

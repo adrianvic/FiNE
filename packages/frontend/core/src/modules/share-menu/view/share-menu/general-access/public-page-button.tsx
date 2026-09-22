@@ -5,7 +5,7 @@ import { ShareInfoService } from '@affine/core/modules/share-doc';
 import { UserFriendlyError } from '@affine/error';
 import { PublicDocMode } from '@affine/graphql';
 import { useI18n } from '@affine/i18n';
-import track from '@affine/track';
+
 import {
   LockIcon,
   SingleSelectCheckSolidIcon,
@@ -69,7 +69,7 @@ export const PublicDoc = ({ disabled }: { disabled?: boolean }) => {
       await shareInfoService.shareInfo.enableShare(
         currentMode === 'edgeless' ? PublicDocMode.Edgeless : PublicDocMode.Page
       );
-      track.$.sharePanel.$.createShareLink();
+      
       notify.success({
         title:
           t[

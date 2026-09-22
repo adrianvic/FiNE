@@ -22,7 +22,7 @@ import { WorkspaceService } from '@affine/core/modules/workspace';
 import type { AffineDNDData } from '@affine/core/types/dnd';
 import { Unreachable } from '@affine/env/constant';
 import { useI18n } from '@affine/i18n';
-import { track } from '@affine/track';
+
 import {
   DeleteIcon,
   FolderIcon,
@@ -219,9 +219,7 @@ const NavigationPanelFolderNodeFolder = ({
   );
   const handleDelete = useCallback(() => {
     node.delete();
-    track.$.navigationPanel.organize.deleteOrganizeItem({
-      type: 'folder',
-    });
+    
     notify.success({
       title: t['com.affine.rootAppSidebar.organize.delete.notify-title']({
         name,
@@ -260,9 +258,7 @@ const NavigationPanelFolderNodeFolder = ({
   const handleDropOnFolder = useCallback(
     (data: DropTargetDropEvent<AffineDNDData>) => {
       if (data.source.data.entity?.type) {
-        track.$.navigationPanel.folders.drop({
-          type: data.source.data.entity.type,
-        });
+        
       }
       if (data.treeInstruction?.type === 'make-child') {
         if (data.source.data.entity?.type === 'folder') {
@@ -273,7 +269,7 @@ const NavigationPanelFolderNodeFolder = ({
             return;
           }
           node.moveHere(data.source.data.entity.id, node.indexAt('before'));
-          track.$.navigationPanel.organize.moveOrganizeItem({ type: 'folder' });
+          
         } else if (
           data.source.data.entity?.type === 'collection' ||
           data.source.data.entity?.type === 'doc' ||
@@ -284,20 +280,14 @@ const NavigationPanelFolderNodeFolder = ({
             'navigation-panel:organize:folder-node'
           ) {
             node.moveHere(data.source.data.from.nodeId, node.indexAt('before'));
-            track.$.navigationPanel.organize.moveOrganizeItem({
-              type: 'link',
-              target: data.source.data.entity?.type,
-            });
+            
           } else {
             node.createLink(
               data.source.data.entity?.type,
               data.source.data.entity.id,
               node.indexAt('before')
             );
-            track.$.navigationPanel.organize.createOrganizeItem({
-              type: 'link',
-              target: data.source.data.entity?.type,
-            });
+            
           }
         }
       } else {
@@ -340,9 +330,7 @@ const NavigationPanelFolderNodeFolder = ({
   const handleDropOnPlaceholder = useCallback(
     (data: DropTargetDropEvent<AffineDNDData>) => {
       if (data.source.data.entity?.type) {
-        track.$.navigationPanel.folders.drop({
-          type: data.source.data.entity.type,
-        });
+        
       }
       if (data.source.data.entity?.type === 'folder') {
         if (
@@ -352,7 +340,7 @@ const NavigationPanelFolderNodeFolder = ({
           return;
         }
         node.moveHere(data.source.data.entity.id, node.indexAt('before'));
-        track.$.navigationPanel.organize.moveOrganizeItem({ type: 'folder' });
+        
       } else if (
         data.source.data.entity?.type === 'collection' ||
         data.source.data.entity?.type === 'doc' ||
@@ -362,19 +350,14 @@ const NavigationPanelFolderNodeFolder = ({
           data.source.data.from?.at === 'navigation-panel:organize:folder-node'
         ) {
           node.moveHere(data.source.data.from.nodeId, node.indexAt('before'));
-          track.$.navigationPanel.organize.moveOrganizeItem({
-            type: data.source.data.entity?.type,
-          });
+          
         } else {
           node.createLink(
             data.source.data.entity?.type,
             data.source.data.entity.id,
             node.indexAt('before')
           );
-          track.$.navigationPanel.organize.createOrganizeItem({
-            type: 'link',
-            target: data.source.data.entity?.type,
-          });
+          
         }
       }
     },
@@ -387,9 +370,7 @@ const NavigationPanelFolderNodeFolder = ({
         return;
       }
       if (data.source.data.entity?.type) {
-        track.$.navigationPanel.folders.drop({
-          type: data.source.data.entity.type,
-        });
+        
       }
       if (
         data.treeInstruction?.type === 'reorder-above' ||
@@ -408,7 +389,7 @@ const NavigationPanelFolderNodeFolder = ({
             data.source.data.entity.id,
             node.indexAt(at, dropAtNode.id)
           );
-          track.$.navigationPanel.organize.moveOrganizeItem({ type: 'folder' });
+          
         } else if (
           data.source.data.entity?.type === 'collection' ||
           data.source.data.entity?.type === 'doc' ||
@@ -422,10 +403,7 @@ const NavigationPanelFolderNodeFolder = ({
               data.source.data.from.nodeId,
               node.indexAt(at, dropAtNode.id)
             );
-            track.$.navigationPanel.organize.moveOrganizeItem({
-              type: 'link',
-              target: data.source.data.entity?.type,
-            });
+            
           } else {
             node.createLink(
               data.source.data.entity?.type,
@@ -433,10 +411,7 @@ const NavigationPanelFolderNodeFolder = ({
               node.indexAt(at, dropAtNode.id)
             );
 
-            track.$.navigationPanel.organize.createOrganizeItem({
-              type: 'link',
-              target: data.source.data.entity?.type,
-            });
+            
           }
         }
       } else if (data.treeInstruction?.type === 'reparent') {
@@ -587,11 +562,8 @@ const NavigationPanelFolderNodeFolder = ({
   const handleNewDoc = useCallback(() => {
     const newDoc = createPage();
     node.createLink('doc', newDoc.id, node.indexAt('before'));
-    track.$.navigationPanel.folders.createDoc();
-    track.$.navigationPanel.organize.createOrganizeItem({
-      type: 'link',
-      target: 'doc',
-    });
+    
+    
     setCollapsed(false);
   }, [createPage, node, setCollapsed]);
 
@@ -600,7 +572,7 @@ const NavigationPanelFolderNodeFolder = ({
       t['com.affine.rootAppSidebar.organize.new-folders'](),
       node.indexAt('before')
     );
-    track.$.navigationPanel.organize.createOrganizeItem({ type: 'folder' });
+    
     setCollapsed(false);
     setNewFolderId(newFolderId);
   }, [node, setCollapsed, t]);
@@ -641,10 +613,7 @@ const NavigationPanelFolderNodeFolder = ({
           updated && setCollapsed(false);
         }
       );
-      track.$.navigationPanel.organize.createOrganizeItem({
-        type: 'link',
-        target: type,
-      });
+      
     },
     [children, node, setCollapsed, workspaceDialogService]
   );

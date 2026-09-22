@@ -1,7 +1,7 @@
 import { shallowEqual } from '@affine/component';
 import { DebugLogger } from '@affine/debug';
 import { ServerDeploymentType } from '@affine/graphql';
-import { flushTelemetry, setTelemetryContext, tracker } from '@affine/track';
+
 import { LiveData, OnEvent, Service } from '@toeverything/infra';
 
 import type { AuthAccountInfo, Server, ServersService } from '../../cloud';
@@ -58,31 +58,20 @@ export class TelemetryService extends Service {
             ? BUILD_CONFIG.appBuildType
             : 'stable';
 
-        setTelemetryContext({
-          isAuthed: !!account,
-          isSelfHosted: !!selfHosted,
-          channel,
-          officialEndpoint: getOfficialTelemetryEndpoint(channel),
-        });
+        
 
         if (prevAccount) {
-          tracker.reset();
+          
         }
         // the isSelfHosted property from environment is not reliable
         if (selfHosted !== prevSelfHosted) {
-          tracker.register({
-            isSelfHosted: selfHosted,
-          });
+          
         }
         prevSelfHosted = selfHosted;
         prevAccount = account ?? null;
         if (account) {
-          tracker.identify(account.id);
-          tracker.people.set({
-            $email: account.email,
-            $name: account.label,
-            $avatar: account.avatar,
-          });
+          
+          
           void flushTelemetry().catch(error => {
             logger.error('failed to flush telemetry after login', error);
           });
@@ -103,15 +92,6 @@ export class TelemetryService extends Service {
   }
 
   registerMiddlewares() {
-    this.disposables.push(
-      tracker.middleware((_event, parameters) => {
-        const extraContext = this.extractGlobalContext();
-        return {
-          ...extraContext,
-          ...parameters,
-        };
-      })
-    );
   }
 
   extractGlobalContext(): { page?: string; serverId?: string } {

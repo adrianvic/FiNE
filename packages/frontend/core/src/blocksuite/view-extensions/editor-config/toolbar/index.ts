@@ -8,7 +8,7 @@ import { EditorService } from '@affine/core/modules/editor';
 import type { EditorSettingExt } from '@affine/core/modules/editor-setting/entities/editor-setting';
 import { copyLinkToBlockStdScopeClipboard } from '@affine/core/utils/clipboard';
 import { I18n, i18nTime } from '@affine/i18n';
-import { track } from '@affine/track';
+
 import { BookmarkBlockComponent } from '@blocksuite/affine/blocks/bookmark';
 import {
   EmbedFigmaBlockComponent,
@@ -213,7 +213,7 @@ function createCopyLinkToBlockMenuItem(
         notify.success({ title: I18n['Copied link to clipboard']() });
       }
 
-      track.doc.editor.toolbar.copyBlockToLink({ type });
+      
 
       ctx.close();
     },
@@ -408,7 +408,7 @@ function createToolbarMoreMenuConfigV2(baseUrl?: string) {
                 })
                 .catch(console.error);
 
-              track.doc.editor.toolbar.copyBlockToLink({ type });
+              
             },
           },
         ],
@@ -796,7 +796,7 @@ function createSurfaceRefToolbarConfig(baseUrl?: string): ToolbarModuleConfig {
                 })
                 .catch(console.error);
 
-              track.doc.editor.toolbar.copyBlockToLink({ type });
+              
             },
           },
         ],

@@ -11,7 +11,7 @@ import { WorkbenchService } from '@affine/core/modules/workbench';
 import { WorkspaceService } from '@affine/core/modules/workspace';
 import { inferOpenMode } from '@affine/core/utils';
 import { useI18n } from '@affine/i18n';
-import track from '@affine/track';
+
 import { useService } from '@toeverything/infra';
 import { useCallback } from 'react';
 
@@ -72,7 +72,7 @@ export const AllDocsHeader = ({
   );
 
   const onImportFile = useCallback(() => {
-    track.$.header.importModal.open();
+    
     workspaceDialogService.open('import', undefined, payload => {
       if (!payload) {
         return;

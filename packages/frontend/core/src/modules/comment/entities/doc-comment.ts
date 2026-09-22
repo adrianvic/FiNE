@@ -1,5 +1,5 @@
 import { type CommentChangeAction, DocMode } from '@affine/graphql';
-import { track } from '@affine/track';
+
 import { InlineCommentManager } from '@blocksuite/affine/inlines/comment';
 import type {
   BaseSelection,
@@ -205,9 +205,7 @@ export class DocCommentEntity extends Entity<{
         attachments: draft.attachments,
       });
     }
-    track.$.commentPanel.$.editComment({
-      type: draft.type === 'comment' ? 'root' : 'node',
-    });
+    
     this.editingDraft$.setValue(null);
     this.revalidate();
   }
@@ -251,16 +249,7 @@ export class DocCommentEntity extends Entity<{
     // for block's preview, it will be something like <Paragraph>
     // extract the block type from the preview
     const blockType = preview?.match(/<([^>]+)>/)?.[1];
-    track.$.commentPanel.$.createComment({
-      type: 'root',
-      withAttachment: (attachments?.length ?? 0) > 0,
-      withMention: mentions.length > 0,
-      category: blockType
-        ? blockType
-        : (this.docMode$.value ?? 'page') === 'page'
-          ? 'Page'
-          : 'Note',
-    });
+    
     this.pendingComment$.setValue(null);
     this.revalidate();
   }
@@ -296,12 +285,7 @@ export class DocCommentEntity extends Entity<{
         : comment
     );
     this.comments$.setValue(updatedComments);
-    track.$.commentPanel.$.createComment({
-      type: 'node',
-      withAttachment: (attachments?.length ?? 0) > 0,
-      withMention: mentions.length > 0,
-      category: (this.docMode$.value ?? 'page') === 'page' ? 'Page' : 'Note',
-    });
+    
     this.pendingReply$.setValue(null);
     this.revalidate();
   }
@@ -310,7 +294,7 @@ export class DocCommentEntity extends Entity<{
     await this.store.deleteComment(id);
     const currentComments = this.comments$.value;
     this.comments$.setValue(currentComments.filter(c => c.id !== id));
-    track.$.commentPanel.$.deleteComment({ type: 'root' });
+    
     this.commentDeleted$.next(id);
     this.revalidate();
   }
@@ -325,7 +309,7 @@ export class DocCommentEntity extends Entity<{
       };
     });
     this.comments$.setValue(updatedComments);
-    track.$.commentPanel.$.deleteComment({ type: 'node' });
+    
     this.revalidate();
   }
 
@@ -423,9 +407,7 @@ export class DocCommentEntity extends Entity<{
       this.comments$.setValue(updatedComments);
 
       this.commentResolved$.next(id);
-      track.$.commentPanel.$.resolveComment({
-        type: resolved ? 'on' : 'off',
-      });
+      
       this.revalidate();
     } catch (error) {
       console.error('Failed to resolve comment:', error);

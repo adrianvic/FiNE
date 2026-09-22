@@ -1,4 +1,4 @@
-import { track, tracker } from '@affine/track';
+
 import type { EditorHost } from '@blocksuite/affine/std';
 import type { GfxPrimitiveElementModel } from '@blocksuite/affine/std/gfx';
 import type { BlockModel } from '@blocksuite/affine/store';
@@ -72,7 +72,7 @@ const trackAction = ({
   eventName: AIActionEventName;
   properties: AIActionEventProperties;
 }) => {
-  tracker.track(eventName, properties);
+  
 };
 
 const inferPageMode = (host: EditorHost) => {
@@ -256,11 +256,11 @@ const toTrackedOptions = (
 
 export function setupTracker(requestService: AIRequestService) {
   const upgradeSubscription = AIAppEvents.requestUpgradePlan.subscribe(() => {
-    track.$.paywall.aiAction.viewPlans();
+    
   });
 
   const loginSubscription = AIAppEvents.requestLogin.subscribe(() => {
-    track.doc.editor.aiActions.requestSignIn();
+    
   });
 
   const actionSubscription = requestService.actionEvents$.subscribe(event => {
